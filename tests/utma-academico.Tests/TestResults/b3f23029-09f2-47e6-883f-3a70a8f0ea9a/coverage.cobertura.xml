@@ -1,0 +1,1692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<coverage line-rate="0.7061" branch-rate="0.5172" version="1.9" timestamp="1762748682" lines-covered="298" lines-valid="422" branches-covered="30" branches-valid="58">
+  <sources>
+    <source>C:\web\utma-academico\</source>
+  </sources>
+  <packages>
+    <package name="utma-academico" line-rate="0.7061" branch-rate="0.5172" complexity="155">
+      <classes>
+        <class name="Program" filename="Program.cs" line-rate="0" branch-rate="0" complexity="12">
+          <methods>
+            <method name="&lt;Main&gt;$" signature="(System.String[])" line-rate="0" branch-rate="0" complexity="12">
+              <lines>
+                <line number="9" hits="0" branch="False" />
+                <line number="13" hits="0" branch="False" />
+                <line number="15" hits="0" branch="False" />
+                <line number="16" hits="0" branch="False" />
+                <line number="17" hits="0" branch="False" />
+                <line number="18" hits="0" branch="False" />
+                <line number="19" hits="0" branch="False" />
+                <line number="20" hits="0" branch="False" />
+                <line number="21" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="47" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="22" hits="0" branch="False" />
+                <line number="23" hits="0" branch="False" />
+                <line number="24" hits="0" branch="False" />
+                <line number="25" hits="0" branch="False" />
+                <line number="26" hits="0" branch="False" />
+                <line number="27" hits="0" branch="False" />
+                <line number="28" hits="0" branch="False" />
+                <line number="29" hits="0" branch="False" />
+                <line number="30" hits="0" branch="False" />
+                <line number="31" hits="0" branch="False" />
+                <line number="32" hits="0" branch="False" />
+                <line number="33" hits="0" branch="False" />
+                <line number="34" hits="0" branch="False" />
+                <line number="35" hits="0" branch="False" />
+                <line number="36" hits="0" branch="False" />
+                <line number="37" hits="0" branch="False" />
+                <line number="38" hits="0" branch="False" />
+                <line number="39" hits="0" branch="False" />
+                <line number="40" hits="0" branch="False" />
+                <line number="41" hits="0" branch="False" />
+                <line number="42" hits="0" branch="False" />
+                <line number="43" hits="0" branch="False" />
+                <line number="44" hits="0" branch="False" />
+                <line number="45" hits="0" branch="False" />
+                <line number="46" hits="0" branch="False" />
+                <line number="47" hits="0" branch="False" />
+                <line number="48" hits="0" branch="False" />
+                <line number="49" hits="0" branch="False" />
+                <line number="53" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="98" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="54" hits="0" branch="False" />
+                <line number="56" hits="0" branch="False" />
+                <line number="57" hits="0" branch="False" />
+                <line number="58" hits="0" branch="False" />
+                <line number="59" hits="0" branch="False" />
+                <line number="60" hits="0" branch="False" />
+                <line number="63" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="155" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="64" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="186" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="65" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="217" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="67" hits="0" branch="False" />
+                <line number="68" hits="0" branch="False" />
+                <line number="69" hits="0" branch="False" />
+                <line number="70" hits="0" branch="False" />
+                <line number="71" hits="0" branch="False" />
+                <line number="72" hits="0" branch="False" />
+                <line number="73" hits="0" branch="False" />
+                <line number="74" hits="0" branch="False" />
+                <line number="75" hits="0" branch="False" />
+                <line number="76" hits="0" branch="False" />
+                <line number="77" hits="0" branch="False" />
+                <line number="78" hits="0" branch="False" />
+                <line number="79" hits="0" branch="False" />
+                <line number="80" hits="0" branch="False" />
+                <line number="81" hits="0" branch="False" />
+                <line number="82" hits="0" branch="False" />
+                <line number="83" hits="0" branch="False" />
+                <line number="86" hits="0" branch="False" />
+                <line number="88" hits="0" branch="False" />
+                <line number="91" hits="0" branch="False" />
+                <line number="93" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="308" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="94" hits="0" branch="False" />
+                <line number="95" hits="0" branch="False" />
+                <line number="96" hits="0" branch="False" />
+                <line number="97" hits="0" branch="False" />
+                <line number="98" hits="0" branch="False" />
+                <line number="99" hits="0" branch="False" />
+                <line number="100" hits="0" branch="False" />
+                <line number="101" hits="0" branch="False" />
+                <line number="103" hits="0" branch="False" />
+                <line number="105" hits="0" branch="False" />
+                <line number="106" hits="0" branch="False" />
+                <line number="108" hits="0" branch="False" />
+                <line number="110" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="0" branch="False" />
+            <line number="13" hits="0" branch="False" />
+            <line number="15" hits="0" branch="False" />
+            <line number="16" hits="0" branch="False" />
+            <line number="17" hits="0" branch="False" />
+            <line number="18" hits="0" branch="False" />
+            <line number="19" hits="0" branch="False" />
+            <line number="20" hits="0" branch="False" />
+            <line number="21" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="47" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="22" hits="0" branch="False" />
+            <line number="23" hits="0" branch="False" />
+            <line number="24" hits="0" branch="False" />
+            <line number="25" hits="0" branch="False" />
+            <line number="26" hits="0" branch="False" />
+            <line number="27" hits="0" branch="False" />
+            <line number="28" hits="0" branch="False" />
+            <line number="29" hits="0" branch="False" />
+            <line number="30" hits="0" branch="False" />
+            <line number="31" hits="0" branch="False" />
+            <line number="32" hits="0" branch="False" />
+            <line number="33" hits="0" branch="False" />
+            <line number="34" hits="0" branch="False" />
+            <line number="35" hits="0" branch="False" />
+            <line number="36" hits="0" branch="False" />
+            <line number="37" hits="0" branch="False" />
+            <line number="38" hits="0" branch="False" />
+            <line number="39" hits="0" branch="False" />
+            <line number="40" hits="0" branch="False" />
+            <line number="41" hits="0" branch="False" />
+            <line number="42" hits="0" branch="False" />
+            <line number="43" hits="0" branch="False" />
+            <line number="44" hits="0" branch="False" />
+            <line number="45" hits="0" branch="False" />
+            <line number="46" hits="0" branch="False" />
+            <line number="47" hits="0" branch="False" />
+            <line number="48" hits="0" branch="False" />
+            <line number="49" hits="0" branch="False" />
+            <line number="53" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="98" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="54" hits="0" branch="False" />
+            <line number="56" hits="0" branch="False" />
+            <line number="57" hits="0" branch="False" />
+            <line number="58" hits="0" branch="False" />
+            <line number="59" hits="0" branch="False" />
+            <line number="60" hits="0" branch="False" />
+            <line number="63" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="155" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="64" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="186" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="65" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="217" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="67" hits="0" branch="False" />
+            <line number="68" hits="0" branch="False" />
+            <line number="69" hits="0" branch="False" />
+            <line number="70" hits="0" branch="False" />
+            <line number="71" hits="0" branch="False" />
+            <line number="72" hits="0" branch="False" />
+            <line number="73" hits="0" branch="False" />
+            <line number="74" hits="0" branch="False" />
+            <line number="75" hits="0" branch="False" />
+            <line number="76" hits="0" branch="False" />
+            <line number="77" hits="0" branch="False" />
+            <line number="78" hits="0" branch="False" />
+            <line number="79" hits="0" branch="False" />
+            <line number="80" hits="0" branch="False" />
+            <line number="81" hits="0" branch="False" />
+            <line number="82" hits="0" branch="False" />
+            <line number="83" hits="0" branch="False" />
+            <line number="86" hits="0" branch="False" />
+            <line number="88" hits="0" branch="False" />
+            <line number="91" hits="0" branch="False" />
+            <line number="93" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="308" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="94" hits="0" branch="False" />
+            <line number="95" hits="0" branch="False" />
+            <line number="96" hits="0" branch="False" />
+            <line number="97" hits="0" branch="False" />
+            <line number="98" hits="0" branch="False" />
+            <line number="99" hits="0" branch="False" />
+            <line number="100" hits="0" branch="False" />
+            <line number="101" hits="0" branch="False" />
+            <line number="103" hits="0" branch="False" />
+            <line number="105" hits="0" branch="False" />
+            <line number="106" hits="0" branch="False" />
+            <line number="108" hits="0" branch="False" />
+            <line number="110" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.WeatherForecast" filename="WeatherForecast.cs" line-rate="0" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_Date" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_TemperatureC" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_TemperatureF" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Summary" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="False" />
+            <line number="7" hits="0" branch="False" />
+            <line number="9" hits="0" branch="False" />
+            <line number="11" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Services.JwtService" filename="Services\JwtService.cs" line-rate="1" branch-rate="0.5" complexity="9">
+          <methods>
+            <method name="GenerateToken" signature="(System.Int32,System.String)" line-rate="1" branch-rate="0.5" complexity="8">
+              <lines>
+                <line number="26" hits="2" branch="False" />
+                <line number="27" hits="2" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="18" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="28" hits="2" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="44" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="2" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="70" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="30" hits="2" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="102" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="32" hits="2" branch="False" />
+                <line number="33" hits="2" branch="False" />
+                <line number="35" hits="2" branch="False" />
+                <line number="37" hits="2" branch="False" />
+                <line number="38" hits="2" branch="False" />
+                <line number="39" hits="2" branch="False" />
+                <line number="40" hits="2" branch="False" />
+                <line number="41" hits="2" branch="False" />
+                <line number="42" hits="2" branch="False" />
+                <line number="44" hits="2" branch="False" />
+                <line number="45" hits="2" branch="False" />
+                <line number="46" hits="2" branch="False" />
+                <line number="47" hits="2" branch="False" />
+                <line number="48" hits="2" branch="False" />
+                <line number="49" hits="2" branch="False" />
+                <line number="50" hits="2" branch="False" />
+                <line number="52" hits="2" branch="False" />
+                <line number="53" hits="2" branch="False" />
+                <line number="54" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(Microsoft.Extensions.Configuration.IConfiguration)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="4" branch="False" />
+                <line number="18" hits="4" branch="False" />
+                <line number="19" hits="4" branch="False" />
+                <line number="20" hits="4" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="2" branch="False" />
+            <line number="27" hits="2" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="18" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="28" hits="2" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="44" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="29" hits="2" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="70" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="30" hits="2" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="102" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="32" hits="2" branch="False" />
+            <line number="33" hits="2" branch="False" />
+            <line number="35" hits="2" branch="False" />
+            <line number="37" hits="2" branch="False" />
+            <line number="38" hits="2" branch="False" />
+            <line number="39" hits="2" branch="False" />
+            <line number="40" hits="2" branch="False" />
+            <line number="41" hits="2" branch="False" />
+            <line number="42" hits="2" branch="False" />
+            <line number="44" hits="2" branch="False" />
+            <line number="45" hits="2" branch="False" />
+            <line number="46" hits="2" branch="False" />
+            <line number="47" hits="2" branch="False" />
+            <line number="48" hits="2" branch="False" />
+            <line number="49" hits="2" branch="False" />
+            <line number="50" hits="2" branch="False" />
+            <line number="52" hits="2" branch="False" />
+            <line number="53" hits="2" branch="False" />
+            <line number="54" hits="2" branch="False" />
+            <line number="17" hits="4" branch="False" />
+            <line number="18" hits="4" branch="False" />
+            <line number="19" hits="4" branch="False" />
+            <line number="20" hits="4" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Models.Alumno" filename="Models\Alumno.cs" line-rate="1" branch-rate="1" complexity="11">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="6" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Matricula" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="16" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Nombre" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="25" hits="15" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ApellidoPaterno" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="30" hits="15" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ApellidoMaterno" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="34" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Grupo" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Turno" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="42" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_FechaRegistro" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CodEstatus" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="50" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Calificaciones" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="54" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Asistencias" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="57" hits="8" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="6" branch="False" />
+            <line number="20" hits="16" branch="False" />
+            <line number="25" hits="15" branch="False" />
+            <line number="30" hits="15" branch="False" />
+            <line number="34" hits="3" branch="False" />
+            <line number="38" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
+            <line number="50" hits="1" branch="False" />
+            <line number="54" hits="8" branch="False" />
+            <line number="57" hits="8" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Models.Asistencia" filename="Models\Asistencia.cs" line-rate="0.75" branch-rate="1" complexity="8">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="get_AlumnoId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Alumno" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MateriaId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="25" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Materia" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="28" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Fecha" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="32" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Estatus" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="36" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CodEstatus" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="40" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="2" branch="False" />
+            <line number="18" hits="3" branch="False" />
+            <line number="21" hits="0" branch="False" />
+            <line number="25" hits="3" branch="False" />
+            <line number="28" hits="0" branch="False" />
+            <line number="32" hits="3" branch="False" />
+            <line number="36" hits="5" branch="False" />
+            <line number="40" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Models.Calificacion" filename="Models\Calificacion.cs" line-rate="0.8" branch-rate="1" complexity="10">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="get_AlumnoId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Alumno" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="22" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MateriaId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Materia" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="30" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Parcial" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="34" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CalificacionValor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Tipo" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="42" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Fecha" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CodEstatus" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="50" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="2" branch="False" />
+            <line number="18" hits="8" branch="False" />
+            <line number="22" hits="0" branch="False" />
+            <line number="26" hits="5" branch="False" />
+            <line number="30" hits="0" branch="False" />
+            <line number="34" hits="5" branch="False" />
+            <line number="38" hits="8" branch="False" />
+            <line number="42" hits="2" branch="False" />
+            <line number="46" hits="5" branch="False" />
+            <line number="50" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Models.Materia" filename="Models\Materia.cs" line-rate="0.8571" branch-rate="1" complexity="7">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Clave" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="14" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Nombre" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="24" hits="14" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Creditos" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="28" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CodEstatus" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="32" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Calificaciones" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="35" hits="7" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Asistencias" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="36" hits="7" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="2" branch="False" />
+            <line number="19" hits="14" branch="False" />
+            <line number="24" hits="14" branch="False" />
+            <line number="28" hits="1" branch="False" />
+            <line number="32" hits="0" branch="False" />
+            <line number="35" hits="7" branch="False" />
+            <line number="36" hits="7" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Models.Usuario" filename="Models\Usuario.cs" line-rate="0.22219999999999998" branch-rate="1" complexity="9">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="get_EmpresaId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_DepartamentoId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_PerfilId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Nombre" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="24" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Correo" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_UsuarioLogin" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="31" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_PasswordHash" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="35" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name="get_CodEstatus" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="1" branch="False" />
+            <line number="15" hits="0" branch="False" />
+            <line number="18" hits="0" branch="False" />
+            <line number="21" hits="0" branch="False" />
+            <line number="24" hits="0" branch="False" />
+            <line number="27" hits="0" branch="False" />
+            <line number="31" hits="3" branch="False" />
+            <line number="35" hits="0" branch="False" />
+            <line number="38" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Middleware.ErrorHandlingMiddleware" filename="Middleware\ErrorHandlingMiddleware.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger`1&lt;utma_academico.Middleware.ErrorHandlingMiddleware&gt;,Microsoft.Extensions.Hosting.IHostEnvironment)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="2" branch="False" />
+                <line number="21" hits="2" branch="False" />
+                <line number="22" hits="2" branch="False" />
+                <line number="23" hits="2" branch="False" />
+                <line number="24" hits="2" branch="False" />
+                <line number="25" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="20" hits="2" branch="False" />
+            <line number="21" hits="2" branch="False" />
+            <line number="22" hits="2" branch="False" />
+            <line number="23" hits="2" branch="False" />
+            <line number="24" hits="2" branch="False" />
+            <line number="25" hits="2" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Middleware.ErrorHandlingMiddleware/&lt;HandleApiExceptionAsync&gt;d__5" filename="Middleware\ErrorHandlingMiddleware.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="47" hits="2" branch="False" />
+                <line number="48" hits="2" branch="False" />
+                <line number="49" hits="2" branch="False" />
+                <line number="51" hits="2" branch="False" />
+                <line number="52" hits="2" branch="False" />
+                <line number="53" hits="2" branch="False" />
+                <line number="54" hits="2" branch="False" />
+                <line number="55" hits="2" branch="False" />
+                <line number="56" hits="2" branch="False" />
+                <line number="58" hits="2" branch="False" />
+                <line number="59" hits="2" branch="False" />
+                <line number="60" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="47" hits="2" branch="False" />
+            <line number="48" hits="2" branch="False" />
+            <line number="49" hits="2" branch="False" />
+            <line number="51" hits="2" branch="False" />
+            <line number="52" hits="2" branch="False" />
+            <line number="53" hits="2" branch="False" />
+            <line number="54" hits="2" branch="False" />
+            <line number="55" hits="2" branch="False" />
+            <line number="56" hits="2" branch="False" />
+            <line number="58" hits="2" branch="False" />
+            <line number="59" hits="2" branch="False" />
+            <line number="60" hits="2" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Middleware.ErrorHandlingMiddleware/&lt;InvokeAsync&gt;d__4" filename="Middleware\ErrorHandlingMiddleware.cs" line-rate="0.9375" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.9375" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="28" hits="2" branch="False" />
+                <line number="30" hits="2" branch="False" />
+                <line number="31" hits="2" branch="False" />
+                <line number="32" hits="0" branch="False" />
+                <line number="33" hits="1" branch="False" />
+                <line number="34" hits="1" branch="False" />
+                <line number="35" hits="1" branch="False" />
+                <line number="36" hits="1" branch="False" />
+                <line number="37" hits="1" branch="False" />
+                <line number="38" hits="1" branch="False" />
+                <line number="39" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="500" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="42" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
+                <line number="44" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="28" hits="2" branch="False" />
+            <line number="30" hits="2" branch="False" />
+            <line number="31" hits="2" branch="False" />
+            <line number="32" hits="0" branch="False" />
+            <line number="33" hits="1" branch="False" />
+            <line number="34" hits="1" branch="False" />
+            <line number="35" hits="1" branch="False" />
+            <line number="36" hits="1" branch="False" />
+            <line number="37" hits="1" branch="False" />
+            <line number="38" hits="1" branch="False" />
+            <line number="39" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="500" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="42" hits="1" branch="False" />
+            <line number="43" hits="1" branch="False" />
+            <line number="44" hits="2" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Exceptions.ApiException" filename="Exceptions\ApiException.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_ErrorCode" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="9" branch="False" />
+              </lines>
+            </method>
+            <method name="get_StatusCode" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Details" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.String,System.String,System.Int32,System.Object)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="17" branch="False" />
+                <line number="20" hits="17" branch="False" />
+                <line number="21" hits="17" branch="False" />
+                <line number="22" hits="17" branch="False" />
+                <line number="23" hits="17" branch="False" />
+                <line number="24" hits="17" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="9" branch="False" />
+            <line number="14" hits="8" branch="False" />
+            <line number="17" hits="2" branch="False" />
+            <line number="19" hits="17" branch="False" />
+            <line number="20" hits="17" branch="False" />
+            <line number="21" hits="17" branch="False" />
+            <line number="22" hits="17" branch="False" />
+            <line number="23" hits="17" branch="False" />
+            <line number="24" hits="17" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Exceptions.ExceptionCatalog" filename="Exceptions\ExceptionCatalog.cs" line-rate="1" branch-rate="1" complexity="6">
+          <methods>
+            <method name="AlumnoNotFound" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="4" branch="False" />
+              </lines>
+            </method>
+            <method name="MateriaNotFound" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="UsuarioNotFound" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="Unauthorized" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="BadRequest" signature="(System.String,System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="24" hits="6" branch="False" />
+              </lines>
+            </method>
+            <method name="Internal" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="4" branch="False" />
+            <line number="15" hits="1" branch="False" />
+            <line number="18" hits="2" branch="False" />
+            <line number="21" hits="2" branch="False" />
+            <line number="24" hits="6" branch="False" />
+            <line number="27" hits="2" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.DTOs.AsistenciaCreateDto" filename="DTOs\AsistenciaCreateDto.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_AlumnoId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="7" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MateriaId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Fecha" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="4" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Presente" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="4" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="7" branch="False" />
+            <line number="21" hits="5" branch="False" />
+            <line number="27" hits="4" branch="False" />
+            <line number="33" hits="4" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.DTOs.CalificacionCreateDto" filename="DTOs\CalificacionCreateDto.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_AlumnoId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="8" branch="False" />
+              </lines>
+            </method>
+            <method name="get_MateriaId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="6" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Parcial" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="7" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Calificacion" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="34" hits="7" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="8" branch="False" />
+            <line number="20" hits="6" branch="False" />
+            <line number="27" hits="7" branch="False" />
+            <line number="34" hits="7" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.DTOs.LoginDto" filename="DTOs\LoginDto.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Usuario" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="9" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ApiKey" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="9" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="9" branch="False" />
+            <line number="21" hits="9" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.DTOs.TokenResponseDto" filename="DTOs\TokenResponseDto.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Token" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ExpiresAt" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="10" hits="3" branch="False" />
+            <line number="11" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Data.AcademicoDbContext" filename="Data\AcademicoDbContext.cs" line-rate="1" branch-rate="1" complexity="7">
+          <methods>
+            <method name="get_Alumnos" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="40" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Materias" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Calificaciones" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Asistencias" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="33" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Usuarios" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="31" branch="False" />
+              </lines>
+            </method>
+            <method name="OnModelCreating" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="1" branch="False" />
+                <line number="24" hits="1" branch="False" />
+                <line number="28" hits="1" branch="False" />
+                <line number="29" hits="1" branch="False" />
+                <line number="30" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="35" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(Microsoft.EntityFrameworkCore.DbContextOptions`1&lt;utma_academico.Data.AcademicoDbContext&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="14" branch="False" />
+                <line number="11" hits="14" branch="False" />
+                <line number="12" hits="14" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="40" branch="False" />
+            <line number="16" hits="36" branch="False" />
+            <line number="17" hits="36" branch="False" />
+            <line number="18" hits="33" branch="False" />
+            <line number="19" hits="31" branch="False" />
+            <line number="23" hits="1" branch="False" />
+            <line number="24" hits="1" branch="False" />
+            <line number="28" hits="1" branch="False" />
+            <line number="29" hits="1" branch="False" />
+            <line number="30" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="35" hits="1" branch="False" />
+            <line number="10" hits="14" branch="False" />
+            <line number="11" hits="14" branch="False" />
+            <line number="12" hits="14" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AlumnosController" filename="Controllers\AlumnosController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(utma_academico.Data.AcademicoDbContext)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="24" hits="2" branch="False" />
+                <line number="25" hits="2" branch="False" />
+                <line number="26" hits="2" branch="False" />
+                <line number="27" hits="2" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="24" hits="2" branch="False" />
+            <line number="25" hits="2" branch="False" />
+            <line number="26" hits="2" branch="False" />
+            <line number="27" hits="2" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AlumnosController/&lt;&gt;c" filename="Controllers\AlumnosController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="&lt;Historial&gt;b__2_0" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="80" hits="3" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="80" hits="3" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AlumnosController/&lt;Historial&gt;d__2" filename="Controllers\AlumnosController.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="35" hits="2" branch="False" />
+                <line number="37" hits="2" branch="False" />
+                <line number="38" hits="2" branch="False" />
+                <line number="39" hits="2" branch="False" />
+                <line number="41" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="333" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="42" hits="1" branch="False" />
+                <line number="45" hits="1" branch="False" />
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+                <line number="50" hits="1" branch="False" />
+                <line number="51" hits="1" branch="False" />
+                <line number="52" hits="1" branch="False" />
+                <line number="53" hits="1" branch="False" />
+                <line number="54" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+                <line number="60" hits="1" branch="False" />
+                <line number="61" hits="1" branch="False" />
+                <line number="62" hits="1" branch="False" />
+                <line number="63" hits="1" branch="False" />
+                <line number="64" hits="1" branch="False" />
+                <line number="65" hits="1" branch="False" />
+                <line number="66" hits="1" branch="False" />
+                <line number="67" hits="1" branch="False" />
+                <line number="68" hits="1" branch="False" />
+                <line number="69" hits="1" branch="False" />
+                <line number="70" hits="1" branch="False" />
+                <line number="71" hits="1" branch="False" />
+                <line number="74" hits="1" branch="False" />
+                <line number="75" hits="1" branch="False" />
+                <line number="76" hits="1" branch="False" />
+                <line number="77" hits="1" branch="False" />
+                <line number="78" hits="1" branch="False" />
+                <line number="79" hits="1" branch="False" />
+                <line number="81" hits="1" branch="False" />
+                <line number="82" hits="1" branch="False" />
+                <line number="83" hits="1" branch="False" />
+                <line number="84" hits="1" branch="False" />
+                <line number="85" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="35" hits="2" branch="False" />
+            <line number="37" hits="2" branch="False" />
+            <line number="38" hits="2" branch="False" />
+            <line number="39" hits="2" branch="False" />
+            <line number="41" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="333" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="42" hits="1" branch="False" />
+            <line number="45" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+            <line number="50" hits="1" branch="False" />
+            <line number="51" hits="1" branch="False" />
+            <line number="52" hits="1" branch="False" />
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="60" hits="1" branch="False" />
+            <line number="61" hits="1" branch="False" />
+            <line number="62" hits="1" branch="False" />
+            <line number="63" hits="1" branch="False" />
+            <line number="64" hits="1" branch="False" />
+            <line number="65" hits="1" branch="False" />
+            <line number="66" hits="1" branch="False" />
+            <line number="67" hits="1" branch="False" />
+            <line number="68" hits="1" branch="False" />
+            <line number="69" hits="1" branch="False" />
+            <line number="70" hits="1" branch="False" />
+            <line number="71" hits="1" branch="False" />
+            <line number="74" hits="1" branch="False" />
+            <line number="75" hits="1" branch="False" />
+            <line number="76" hits="1" branch="False" />
+            <line number="77" hits="1" branch="False" />
+            <line number="78" hits="1" branch="False" />
+            <line number="79" hits="1" branch="False" />
+            <line number="81" hits="1" branch="False" />
+            <line number="82" hits="1" branch="False" />
+            <line number="83" hits="1" branch="False" />
+            <line number="84" hits="1" branch="False" />
+            <line number="85" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AsistenciasController" filename="Controllers\AsistenciasController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(utma_academico.Data.AcademicoDbContext)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="4" branch="False" />
+                <line number="27" hits="4" branch="False" />
+                <line number="28" hits="4" branch="False" />
+                <line number="29" hits="4" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="4" branch="False" />
+            <line number="27" hits="4" branch="False" />
+            <line number="28" hits="4" branch="False" />
+            <line number="29" hits="4" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AsistenciasController/&lt;GetById&gt;d__3" filename="Controllers\AsistenciasController.cs" line-rate="0.7777" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.7777" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="73" hits="1" branch="False" />
+                <line number="74" hits="1" branch="False" />
+                <line number="75" hits="1" branch="False" />
+                <line number="76" hits="1" branch="False" />
+                <line number="77" hits="1" branch="False" />
+                <line number="79" hits="1" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="427" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="80" hits="1" branch="False" />
+                <line number="82" hits="0" branch="False" />
+                <line number="83" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="73" hits="1" branch="False" />
+            <line number="74" hits="1" branch="False" />
+            <line number="75" hits="1" branch="False" />
+            <line number="76" hits="1" branch="False" />
+            <line number="77" hits="1" branch="False" />
+            <line number="79" hits="1" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="427" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="80" hits="1" branch="False" />
+            <line number="82" hits="0" branch="False" />
+            <line number="83" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AsistenciasController/&lt;Post&gt;d__2" filename="Controllers\AsistenciasController.cs" line-rate="0.9545" branch-rate="0.75" complexity="8">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.9545" branch-rate="0.75" complexity="8">
+              <lines>
+                <line number="37" hits="3" branch="False" />
+                <line number="38" hits="3" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="73" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="39" hits="1" branch="False" />
+                <line number="42" hits="2" branch="False" />
+                <line number="43" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="269" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="44" hits="1" branch="False" />
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="469" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="48" hits="0" branch="False" />
+                <line number="51" hits="1" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="500" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="53" hits="1" branch="False" />
+                <line number="54" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+                <line number="58" hits="1" branch="False" />
+                <line number="59" hits="1" branch="False" />
+                <line number="60" hits="1" branch="False" />
+                <line number="62" hits="1" branch="False" />
+                <line number="63" hits="1" branch="False" />
+                <line number="65" hits="1" branch="False" />
+                <line number="66" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="37" hits="3" branch="False" />
+            <line number="38" hits="3" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="73" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="39" hits="1" branch="False" />
+            <line number="42" hits="2" branch="False" />
+            <line number="43" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="269" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="44" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="469" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="48" hits="0" branch="False" />
+            <line number="51" hits="1" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="500" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="58" hits="1" branch="False" />
+            <line number="59" hits="1" branch="False" />
+            <line number="60" hits="1" branch="False" />
+            <line number="62" hits="1" branch="False" />
+            <line number="63" hits="1" branch="False" />
+            <line number="65" hits="1" branch="False" />
+            <line number="66" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AuthController" filename="Controllers\AuthController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(utma_academico.Data.AcademicoDbContext,utma_academico.Services.JwtService,Microsoft.Extensions.Configuration.IConfiguration)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="24" hits="3" branch="False" />
+                <line number="25" hits="3" branch="False" />
+                <line number="26" hits="3" branch="False" />
+                <line number="27" hits="3" branch="False" />
+                <line number="28" hits="3" branch="False" />
+                <line number="29" hits="3" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="24" hits="3" branch="False" />
+            <line number="25" hits="3" branch="False" />
+            <line number="26" hits="3" branch="False" />
+            <line number="27" hits="3" branch="False" />
+            <line number="28" hits="3" branch="False" />
+            <line number="29" hits="3" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.AuthController/&lt;Login&gt;d__4" filename="Controllers\AuthController.cs" line-rate="0.9166" branch-rate="0.75" complexity="8">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.9166" branch-rate="0.75" complexity="8">
+              <lines>
+                <line number="38" hits="3" branch="False" />
+                <line number="39" hits="3" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="67" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="40" hits="0" branch="False" />
+                <line number="42" hits="3" branch="False" />
+                <line number="43" hits="3" branch="True" condition-coverage="75% (3/4)">
+                  <conditions>
+                    <condition number="135" type="jump" coverage="50%" />
+                    <condition number="169" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="44" hits="1" branch="False" />
+                <line number="47" hits="2" branch="False" />
+                <line number="48" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="465" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="49" hits="1" branch="False" />
+                <line number="51" hits="1" branch="False" />
+                <line number="53" hits="1" branch="False" />
+                <line number="54" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="38" hits="3" branch="False" />
+            <line number="39" hits="3" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="67" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="40" hits="0" branch="False" />
+            <line number="42" hits="3" branch="False" />
+            <line number="43" hits="3" branch="True" condition-coverage="75% (3/4)">
+              <conditions>
+                <condition number="135" type="jump" coverage="50%" />
+                <condition number="169" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="44" hits="1" branch="False" />
+            <line number="47" hits="2" branch="False" />
+            <line number="48" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="465" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="49" hits="1" branch="False" />
+            <line number="51" hits="1" branch="False" />
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.CalificacionesController" filename="Controllers\CalificacionesController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(utma_academico.Data.AcademicoDbContext)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="4" branch="False" />
+                <line number="27" hits="4" branch="False" />
+                <line number="28" hits="4" branch="False" />
+                <line number="29" hits="4" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="4" branch="False" />
+            <line number="27" hits="4" branch="False" />
+            <line number="28" hits="4" branch="False" />
+            <line number="29" hits="4" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.CalificacionesController/&lt;GetById&gt;d__3" filename="Controllers\CalificacionesController.cs" line-rate="0.7777" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.7777" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="82" hits="1" branch="False" />
+                <line number="83" hits="1" branch="False" />
+                <line number="84" hits="1" branch="False" />
+                <line number="85" hits="1" branch="False" />
+                <line number="86" hits="1" branch="False" />
+                <line number="88" hits="1" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="427" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="89" hits="1" branch="False" />
+                <line number="91" hits="0" branch="False" />
+                <line number="92" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="82" hits="1" branch="False" />
+            <line number="83" hits="1" branch="False" />
+            <line number="84" hits="1" branch="False" />
+            <line number="85" hits="1" branch="False" />
+            <line number="86" hits="1" branch="False" />
+            <line number="88" hits="1" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="427" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="89" hits="1" branch="False" />
+            <line number="91" hits="0" branch="False" />
+            <line number="92" hits="0" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.CalificacionesController/&lt;Post&gt;d__2" filename="Controllers\CalificacionesController.cs" line-rate="0.8887999999999999" branch-rate="0.6428" complexity="14">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="0.8887999999999999" branch-rate="0.6428" complexity="14">
+              <lines>
+                <line number="41" hits="3" branch="False" />
+                <line number="42" hits="3" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="73" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="43" hits="1" branch="False" />
+                <line number="45" hits="2" branch="False" />
+                <line number="46" hits="2" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="269" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="47" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+                <line number="50" hits="1" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="469" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="51" hits="0" branch="False" />
+                <line number="53" hits="1" branch="True" condition-coverage="50% (2/4)">
+                  <conditions>
+                    <condition number="500" type="jump" coverage="50%" />
+                    <condition number="523" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="54" hits="0" branch="False" />
+                <line number="56" hits="1" branch="True" condition-coverage="50% (2/4)">
+                  <conditions>
+                    <condition number="562" type="jump" coverage="50%" />
+                    <condition number="594" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="57" hits="0" branch="False" />
+                <line number="59" hits="1" branch="False" />
+                <line number="60" hits="1" branch="False" />
+                <line number="61" hits="1" branch="False" />
+                <line number="62" hits="1" branch="False" />
+                <line number="63" hits="1" branch="False" />
+                <line number="64" hits="1" branch="False" />
+                <line number="65" hits="1" branch="False" />
+                <line number="66" hits="1" branch="False" />
+                <line number="67" hits="1" branch="False" />
+                <line number="68" hits="1" branch="False" />
+                <line number="70" hits="1" branch="False" />
+                <line number="71" hits="1" branch="False" />
+                <line number="73" hits="1" branch="False" />
+                <line number="74" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="41" hits="3" branch="False" />
+            <line number="42" hits="3" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="73" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="43" hits="1" branch="False" />
+            <line number="45" hits="2" branch="False" />
+            <line number="46" hits="2" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="269" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="47" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+            <line number="50" hits="1" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="469" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="51" hits="0" branch="False" />
+            <line number="53" hits="1" branch="True" condition-coverage="50% (2/4)">
+              <conditions>
+                <condition number="500" type="jump" coverage="50%" />
+                <condition number="523" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="54" hits="0" branch="False" />
+            <line number="56" hits="1" branch="True" condition-coverage="50% (2/4)">
+              <conditions>
+                <condition number="562" type="jump" coverage="50%" />
+                <condition number="594" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="57" hits="0" branch="False" />
+            <line number="59" hits="1" branch="False" />
+            <line number="60" hits="1" branch="False" />
+            <line number="61" hits="1" branch="False" />
+            <line number="62" hits="1" branch="False" />
+            <line number="63" hits="1" branch="False" />
+            <line number="64" hits="1" branch="False" />
+            <line number="65" hits="1" branch="False" />
+            <line number="66" hits="1" branch="False" />
+            <line number="67" hits="1" branch="False" />
+            <line number="68" hits="1" branch="False" />
+            <line number="70" hits="1" branch="False" />
+            <line number="71" hits="1" branch="False" />
+            <line number="73" hits="1" branch="False" />
+            <line number="74" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.ReportesController" filename="Controllers\ReportesController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(utma_academico.Data.AcademicoDbContext)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="1" branch="False" />
+                <line number="24" hits="1" branch="False" />
+                <line number="25" hits="1" branch="False" />
+                <line number="26" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="1" branch="False" />
+            <line number="24" hits="1" branch="False" />
+            <line number="25" hits="1" branch="False" />
+            <line number="26" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.ReportesController/&lt;&gt;c" filename="Controllers\ReportesController.cs" line-rate="1" branch-rate="1" complexity="6">
+          <methods>
+            <method name="&lt;BajoRendimiento&gt;b__2_0" signature="(utma_academico.Models.Calificacion)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="40" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="&lt;BajoRendimiento&gt;b__2_1" signature="(System.Linq.IGrouping`2&lt;System.Int32,utma_academico.Models.Calificacion&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="41" hits="2" branch="False" />
+                <line number="42" hits="2" branch="False" />
+                <line number="43" hits="2" branch="False" />
+                <line number="44" hits="2" branch="False" />
+                <line number="45" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="&lt;BajoRendimiento&gt;b__2_2" signature="(&lt;&gt;f__AnonymousType5`2&lt;System.Int32,System.Decimal&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="&lt;BajoRendimiento&gt;b__2_3" signature="(&lt;&gt;f__AnonymousType5`2&lt;System.Int32,System.Decimal&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="53" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="&lt;BajoRendimiento&gt;b__2_4" signature="(utma_academico.Models.Alumno)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="54" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name="&lt;BajoRendimiento&gt;b__2_5" signature="(&lt;&gt;f__AnonymousType5`2&lt;System.Int32,System.Decimal&gt;,utma_academico.Models.Alumno)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+                <line number="58" hits="1" branch="False" />
+                <line number="59" hits="3" branch="False" />
+                <line number="60" hits="1" branch="False" />
+                <line number="61" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="40" hits="2" branch="False" />
+            <line number="41" hits="2" branch="False" />
+            <line number="42" hits="2" branch="False" />
+            <line number="43" hits="2" branch="False" />
+            <line number="44" hits="2" branch="False" />
+            <line number="45" hits="2" branch="False" />
+            <line number="46" hits="2" branch="False" />
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="2" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="58" hits="1" branch="False" />
+            <line number="59" hits="3" branch="False" />
+            <line number="60" hits="1" branch="False" />
+            <line number="61" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.ReportesController/&lt;BajoRendimiento&gt;d__2" filename="Controllers\ReportesController.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="MoveNext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="1" branch="False" />
+                <line number="37" hits="1" branch="False" />
+                <line number="39" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="49" hits="1" branch="False" />
+                <line number="51" hits="1" branch="False" />
+                <line number="52" hits="1" branch="False" />
+                <line number="62" hits="1" branch="False" />
+                <line number="64" hits="1" branch="False" />
+                <line number="65" hits="1" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="33" hits="1" branch="False" />
+            <line number="37" hits="1" branch="False" />
+            <line number="39" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="49" hits="1" branch="False" />
+            <line number="51" hits="1" branch="False" />
+            <line number="52" hits="1" branch="False" />
+            <line number="62" hits="1" branch="False" />
+            <line number="64" hits="1" branch="False" />
+            <line number="65" hits="1" branch="False" />
+          </lines>
+        </class>
+        <class name="utma_academico.Controllers.WeatherForecastController" filename="Controllers\WeatherForecastController.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="0" branch="False" />
+                <line number="24" hits="0" branch="False" />
+                <line number="25" hits="0" branch="False" />
+                <line number="26" hits="0" branch="False" />
+                <line number="27" hits="0" branch="False" />
+                <line number="28" hits="0" branch="False" />
+                <line number="29" hits="0" branch="False" />
+                <line number="30" hits="0" branch="False" />
+                <line number="31" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(Microsoft.Extensions.Logging.ILogger`1&lt;utma_academico.Controllers.WeatherForecastController&gt;)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="0" branch="False" />
+                <line number="17" hits="0" branch="False" />
+                <line number="18" hits="0" branch="False" />
+                <line number="19" hits="0" branch="False" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="False" />
+                <line number="10" hits="0" branch="False" />
+                <line number="11" hits="0" branch="False" />
+                <line number="12" hits="0" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="0" branch="False" />
+            <line number="24" hits="0" branch="False" />
+            <line number="25" hits="0" branch="False" />
+            <line number="26" hits="0" branch="False" />
+            <line number="27" hits="0" branch="False" />
+            <line number="28" hits="0" branch="False" />
+            <line number="29" hits="0" branch="False" />
+            <line number="30" hits="0" branch="False" />
+            <line number="31" hits="0" branch="False" />
+            <line number="16" hits="0" branch="False" />
+            <line number="17" hits="0" branch="False" />
+            <line number="18" hits="0" branch="False" />
+            <line number="19" hits="0" branch="False" />
+            <line number="9" hits="0" branch="False" />
+            <line number="10" hits="0" branch="False" />
+            <line number="11" hits="0" branch="False" />
+            <line number="12" hits="0" branch="False" />
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

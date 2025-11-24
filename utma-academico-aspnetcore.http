@@ -1,0 +1,6 @@
+@utma_academico_HostAddress = http://localhost:5234
+
+GET {{utma_academico_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
