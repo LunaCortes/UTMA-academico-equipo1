@@ -8,11 +8,9 @@
 
 | Nombre | Rol |
 |--------|-----|
-| Alumno 1 - Nombre Apellido | Desarrollador |
-| Alumno 2 - Nombre Apellido | Desarrollador |
-| Alumno 3 - Nombre Apellido | Desarrollador |
+| Alumno 1 - Jose Guillermo Mottu Vazquez 
+| Alumno 2 - Luna Ximena Cortes Gonzalez 
 
-*⚠️ Reemplaza con los nombres reales antes de crear el PR*
 
 ---
 

@@ -33,10 +33,9 @@ project.lock.json
 .DS_Store
 Thumbs.db
 
-# User secrets (pero permitir appsettings.Development.json con placeholders)
+# User secrets
 secrets.json
 appsettings.*.json
-!appsettings.Development.json
 
 # Postman collection temp
 postman/*.postman_collection.json
