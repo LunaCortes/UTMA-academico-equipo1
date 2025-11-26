@@ -1,271 +1,281 @@
-/*
-  Desarrollador: Ingeniero en Telem�tica
-  Egresado de: Universidad de Colima
-  Nombre: Jorge Luis Vargas Mancilla
-*/
+# 🎓 UTMA-Académico — ASP.NET Core Web API
 
-# utma-academico-aspnetcore - Gu�a para alumnos
-
-Este README explica de forma sencilla y paso a paso c�mo se gener� este proyecto ASP.NET Core Web API y describe las partes importantes del c�digo. Est� pensado para que cualquier alumno pueda replicar el proceso y entender lo que hace cada archivo principal.
+> **Guía rápida de configuración local para estudiantes**
 
 ---
 
-## 1) C�mo generar el proyecto (paso a paso, estilo Windows / Visual Studio)
+## 📋 Equipo de desarrollo
 
-1. Abrir Visual Studio.
-2. Archivo ? Nuevo ? Proyecto.
-3. Buscar y seleccionar `ASP.NET Core Web API` y hacer clic en `Siguiente`.
-4. Asignar un nombre al proyecto (por ejemplo `utma-academico-aspnetcore`) y la ubicaci�n. `Crear`.
-5. En la ventana de configuraci�n del proyecto:
-   - Seleccionar el `Framework` `.NET 8`.
-   - Mantener `Authentication Type` en `None` (vamos a a�adir JWT manualmente).
-   - Desactivar `Enable OpenAPI Support` si quieres, pero en este proyecto usamos Swagger as� que puedes dejarlo activado.
-6. Crear el proyecto. Visual Studio generar� la estructura b�sica.
+| Nombre | Rol |
+|--------|-----|
+| Alumno 1 - Jose Guillermo Mottu Vazquez 
+| Alumno 2 - Luna Ximena Cortes Gonzalez 
 
-Dependencias que agregamos (desde Package Manager o `dotnet add package`):
-- `Microsoft.EntityFrameworkCore` (EF Core)
-- `Pomelo.EntityFrameworkCore.MySql` (provider MySQL)
-- `Microsoft.AspNetCore.Authentication.JwtBearer` (JWT auth)
-- `Swashbuckle.AspNetCore` (Swagger)
-
-En la terminal (ejemplo):
-- dotnet add package Pomelo.EntityFrameworkCore.MySql
-- dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
-- dotnet add package Swashbuckle.AspNetCore
 
 ---
 
-## 2) Estructura principal del proyecto
+## 🚀 Inicio rápido (5 minutos)
 
-- `Program.cs` � configuraci�n de la aplicaci�n, DI, EF Core, JWT y Swagger.
-- `Controllers/` � controladores HTTP (AuthController, AlumnosController, CalificacionesController, AsistenciasController, ReportesController).
-- `Data/` � DbContext de EF Core que mapea las tablas (`AcademicoDbContext.cs`).
-- `Models/` � clases entidad: `Alumno`, `Calificacion`, `Asistencia`, `Materia`, `Usuario`.
-- `DTOs/` � objetos para entrada/salida (por ejemplo `LoginDto`, `CalificacionCreateDto`).
-- `Services/JwtService.cs` � generaci�n de tokens JWT.
-- `Middleware/ErrorHandlingMiddleware.cs` � manejo centralizado de errores.
-- `postman/utma-academico-aspnetcore.postman_collection.json` � colecci�n Postman para probar la API.
+### Paso 1: Clonar el repositorio
 
----
-
-## 3) Resumen de qu� hace cada parte (en lenguaje sencillo)
-
-- Program.cs: configura servicios (controladores, EF, JWT), agrega middleware y arranca la app.
-- DbContext: define las tablas y relaciones para que EF Core se conecte a MySQL.
-- Controllers: reciben peticiones HTTP, consultan la base de datos con el DbContext y devuelven JSON.
-- JwtService + AuthController: permiten obtener un token JWT (en desarrollo se usa una `apiKey`) para autenticar solicitudes.
-- ReportesController: calcula promedios de calificaciones y devuelve alumnos con bajo rendimiento.
-- Postman collection: ya configurada para obtener token y llamar a los endpoints.
-
----
-
-## 4) Explicaci�n l�nea a l�nea (archivos clave)
-
-A continuaci�n encontrar�s comentarios en cada l�nea para `Program.cs` y `Controllers/ReportesController.cs`. Esto te ayudar� a entender exactamente qu� hace cada instrucci�n.
-
-### `Program.cs` (comentado)
-
-```csharp
-// using: referencias a librer�as necesarias
-using Microsoft.EntityFrameworkCore; // EF Core
-using System.Reflection; // para obtener nombre del ensamblado (Swagger XML)
-using utma_academico.Data; // DbContext
-using Microsoft.OpenApi.Models; // Swagger
-using Microsoft.IdentityModel.Tokens; // JWT tokens
-using System.Text; // Encoding
-using utma_academico.Services; // JwtService creado en el proyecto
-using System.Text.Json.Serialization; // para opciones de serializaci�n
-
-var builder = WebApplication.CreateBuilder(args); // crea el builder de la app
-
-// A�adir servicios al contenedor DI
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        // Evitar ciclos de referencia al serializar entidades (EF Core)
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    });
-
-// Habilitar explorador de endpoints para Swagger
-builder.Services.AddEndpointsApiExplorer();
-
-// Configurar Swagger/OpenAPI
-builder.Services.AddSwaggerGen(options =>
-{
-    // Incluir comentarios XML si existen para documentar Swagger
-    var xmlFile = ($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-    {
-        options.IncludeXmlComments(xmlPath);
-    }
-
-    // Definici�n del documento
-    options.SwaggerDoc("v1", new() { Title = "UTMA Acad�mico API", Version = "v1" });
-
-    // Configurar esquema de seguridad para JWT en Swagger (bot�n Authorize)
-    var securityScheme = new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer {token}'",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-    };
-    options.AddSecurityDefinition("Bearer", securityScheme);
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement { { securityScheme, new string[] { } } });
-});
-
-// Configurar cadena de conexi�n a la BD (MySQL) desde appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("AcademicoDb")
-                       ?? "Server=localhost;Database=db_sys_universities;User=root;Password=utma2025;";
-
-builder.Services.AddDbContext<AcademicoDbContext>(options =>
-{
-    // Usar provider de MySQL (Pomelo) y detectar la versi�n del servidor
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-});
-
-// Configuraci�n JWT: leer clave, issuer y audience desde appsettings (o usar valores por defecto)
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "VerySecret_SymmetricKey_ChangeThisInProduction_UTMA2025";
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "utma";
-var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "utma_users";
-
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options =>
-    {
-        options.RequireHttpsMetadata = false; // en desarrollo no forzamos HTTPS para tokens
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-            ValidateIssuer = true,
-            ValidIssuer = jwtIssuer,
-            ValidateAudience = true,
-            ValidAudience = jwtAudience,
-            ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero
-        };
-    });
-
-// Registrar servicio custom para generar tokens
-builder.Services.AddScoped<JwtService>();
-
-var app = builder.Build(); // construir la app
-
-// Middleware personalizado para manejo de errores
-app.UseMiddleware<utma_academico.Middleware.ErrorHandlingMiddleware>();
-
-// Solo en Development habilitamos Swagger UI
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "UTMA Acad�mico API v1");
-        options.RoutePrefix = "swagger"; // servir UI en /swagger
-    });
-}
-
-app.UseHttpsRedirection(); // fuerza redirecci�n a HTTPS
-
-app.UseAuthentication(); // habilitar autenticaci�n
-app.UseAuthorization();  // habilitar autorizaci�n
-
-app.MapControllers(); // mapear controladores a rutas
-
-app.Run(); // arrancar la aplicaci�n
-
-// Partial Program para permitir tests de integraci�n (WebApplicationFactory)
-public partial class Program { }
+```powershell
+git clone <REPO_URL>
+cd utma-academico-aspnetcore
+git checkout develop
 ```
 
-### `Controllers/ReportesController.cs` (comentado)
+### Paso 2: Configurar `dotnet user-secrets` (cada integrante)
 
-```csharp
-using System.Linq; // LINQ helpers
-using System.Threading.Tasks; // Task
-using Microsoft.AspNetCore.Mvc; // ControllerBase, IActionResult
-using Microsoft.EntityFrameworkCore; // EF Core async
-using utma_academico.Data; // AcademicoDbContext
-using Microsoft.AspNetCore.Authorization; // [Authorize]
-using Microsoft.Extensions.Configuration; // IConfiguration
+Los secretos (contraseñas, claves JWT) se guardan **localmente en tu máquina**, no en Git.
 
-[ApiController]
-[Route("api/[controller]")]
-[Authorize] // requiere token JWT en las peticiones
-public class ReportesController : ControllerBase
-{
-    private readonly AcademicoDbContext _db; // DbContext para consultar la BD
-    private readonly IConfiguration _configuration; // leer configuraci�n
+#### 2.1 Inicializar user-secrets
 
-    public ReportesController(AcademicoDbContext db, IConfiguration configuration)
-    {
-        _db = db; // inyectado por DI
-        _configuration = configuration;
-    }
+```powershell
+cd C:\Users\TU_USUARIO\Documents\utma-academico-aspnetcore
 
-    // GET /api/reportes/bajo-rendimiento
-    public async Task<IActionResult> BajoRendimiento(decimal? umbral = null, bool incluirInactivos = false, bool incluirCeros = false)
-    {
-        // Umbral por defecto 8.0 si no est� en configuraci�n ni en query
-        var defaultUmbral = 8.0m;
-        decimal umbralFinal = umbral ?? (_configuration.GetValue<decimal?>("Reportes:Umbral") ?? defaultUmbral);
+# Ejecuta esto solo una vez por proyecto
+dotnet user-secrets init --project .\utma-academico-aspnetcore.csproj
+```
 
-        // Detectar escala (0-10 o 0-100) consultando el valor m�ximo en la tabla de calificaciones
-        var maxValor = await _db.Calificaciones.Where(c => c.CalificacionValor != null).MaxAsync(c => (decimal?)c.CalificacionValor) ?? 0m;
-        var escala100 = maxValor > 10m; // si el max > 10 asumimos 0-100
-        var comparacionUmbral = escala100 ? umbralFinal * 10m : umbralFinal; // ajustar umbral si es 0-100
+#### 2.2 Añadir valores sensibles
 
-        // Construir query base para calificaciones y aplicar filtros por estatus y por cero
-        var calificacionesQuery = _db.Calificaciones.AsQueryable();
-        if (!incluirInactivos) calificacionesQuery = calificacionesQuery.Where(c => c.CodEstatus == "AC");
-        if (!incluirCeros) calificacionesQuery = calificacionesQuery.Where(c => c.CalificacionValor > 0);
+Genera primero una clave JWT segura:
 
-        // Agrupar por alumno y calcular promedio en BD
-        var promedioGlobalQuery = calificacionesQuery.GroupBy(c => c.AlumnoId)
-            .Select(g => new { AlumnoId = g.Key, Promedio = g.Average(c => c.CalificacionValor) });
+```powershell
+# Genera una clave JWT (copia la salida)
+$bytes = New-Object byte[] 32
+[System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
+[Convert]::ToBase64String($bytes)
+```
 
-        // Traer alumnos cuyo promedio < comparacionUmbral y ordenarlos por promedio ascendente
-        var alumnosBajoQuery = from p in promedioGlobalQuery
-                               where p.Promedio < comparacionUmbral
-                               join a in _db.Alumnos on p.AlumnoId equals a.Id
-                               select new
-                               {
-                                   a.Id, a.Matricula, a.Nombre, a.ApellidoPaterno, a.ApellidoMaterno,
-                                   Promedio = escala100 ? p.Promedio / 10m : p.Promedio
-                               };
+Luego, añade los secretos (reemplaza valores):
 
-        var list = await alumnosBajoQuery.OrderBy(x => x.Promedio).ToListAsync();
+```powershell
+# Cadena de conexión MySQL
+dotnet user-secrets set "ConnectionStrings:AcademicoDb" "Server=localhost;Database=db_sys_universities;User=root;Password=tu_contraseña" --project .\utma-academico-aspnetcore.csproj
 
-        // Construir nombre completo y redondear promedio
-        var result = list.Select(x => new
-        {
-            x.Id, x.Matricula,
-            Nombre = string.Join(' ', new[] { x.Nombre, x.ApellidoPaterno, x.ApellidoMaterno }.Where(s => !string.IsNullOrEmpty(s))),
-            Promedio = decimal.Round(x.Promedio, 2)
-        }).ToList();
+# Clave JWT (pega la generada arriba)
+dotnet user-secrets set "Jwt:Key" "TU_CLAVE_JWT_BASE64_AQUI" --project .\utma-academico-aspnetcore.csproj
 
-        return Ok(result); // devolver JSON con la lista
-    }
-}
+# API Key de prueba
+dotnet user-secrets set "Authentication:TestApiKey" "utma_academico_dev" --project .\utma-academico-aspnetcore.csproj
+```
+
+#### 2.3 Verificar que quedaron guardados
+
+```powershell
+dotnet user-secrets list --project .\utma-academico-aspnetcore.csproj
+```
+
+> ✅ Deberías ver las 3 claves listadas
+
+### Paso 3: Construir la API
+
+```powershell
+dotnet build .\utma-academico-aspnetcore.csproj
+```
+
+### Paso 4: Ejecutar y probar Swagger
+
+```powershell
+dotnet run --project .\utma-academico-aspnetcore.csproj
+```
+
+En la consola verás algo como:
+
+```
+Now listening on: https://localhost:5001
+```
+
+**Abre en tu navegador:** `https://localhost:5001/swagger`
+
+> 🎉 ¡Si ves la interfaz Swagger, todo está funcionando!
+
+---
+
+## 🔧 Troubleshooting (solución de problemas)
+
+### ❌ Error: "Connection string failed"
+
+**Solución:** Verifica que tus `user-secrets` están correctos:
+
+```powershell
+dotnet user-secrets list --project .\utma-academico-aspnetcore.csproj
+```
+
+Revisa que:
+- MySQL esté corriendo (`Server=localhost`)
+- El usuario y contraseña sean válidos
+- La base de datos `db_sys_universities` exista
+
+### ❌ Error: "Cannot init user-secrets"
+
+**Solución:** Asegúrate de estar en la carpeta correcta:
+
+```powershell
+# Verifica que estés aquí
+Get-Location
+
+# Debe mostrar: C:\Users\...\utma-academico-aspnetcore
+```
+
+### ❌ Error: Caracteres especiales en la clave JWT
+
+**Solución:** No uses apóstrofos (`'`) ni comillas sin cerrar. Regenera usando el comando Base64:
+
+```powershell
+# Elimina la clave anterior
+dotnet user-secrets remove "Jwt:Key" --project .\utma-academico-aspnetcore.csproj
+
+# Genera una nueva sin caracteres especiales
+$bytes = New-Object byte[] 32
+[System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
+[Convert]::ToBase64String($bytes)
 ```
 
 ---
 
-## 5) Comentario final y recomendaciones
+## 🌳 Git Flow: Crear rama y abrir PR
 
-- No dejes la clave JWT por defecto en producci�n; usa un secreto fuerte y gu�rdalo en `Secret Manager` o en variables de entorno.
-- Considera crear DTOs de salida para controlar exactamente qu� campos expones en cada endpoint.
-- Si la API va a ser p�blica, revisa CORS, throttling y logging m�s detallado.
+### Paso 1: Crear rama `feature/setup-base`
+
+```powershell
+git checkout -b feature/setup-base
+```
+
+### Paso 2: Commitear cambios
+
+```powershell
+# Añadir archivos modificados
+git add appsettings.Development.json README.md
+
+# Crear commit
+git commit -m "chore: add appsettings.Development.json and setup docs"
+
+# Subir rama al remoto
+git push -u origin feature/setup-base
+```
+
+### Paso 3: Abrir Pull Request
+
+#### Opción A: GitHub Web (más fácil)
+
+1. Ve a https://github.com/LunaCortes/UTMA-academico-equipo1
+2. Haz clic en **Compare & pull request**
+3. Selecciona:
+   - **Base:** `develop`
+   - **Compare:** `feature/setup-base`
+4. Añade descripción y asigna revisores
+5. Haz clic en **Create pull request**
+
+#### Opción B: GitHub CLI
+
+```powershell
+gh pr create \
+  --base develop \
+  --head feature/setup-base \
+  --title "Setup: base config and docs" \
+  --body "Añade appsettings.Development.json con placeholders y pasos para configurar user-secrets localmente."
+```
+
+### Paso 4: Mergear (después de revisión)
+
+```powershell
+# Espera a que un compañero apruebe el PR en GitHub
+# Luego, desde la interfaz web, haz clic en "Merge pull request"
+
+# O con GitHub CLI:
+gh pr merge --merge
+```
 
 ---
 
-Si quieres, puedo:
-- A�adir documentaci�n generada autom�ticamente (Swagger) con ejemplos por endpoint.
-- Generar plantillas para los scripts SQL que us� para pruebas.
+## 📁 Estructura del proyecto
 
-Fin del README. �Buen trabajo y �xito con la clase!
+```
+utma-academico-aspnetcore/
+├── Controllers/           # Endpoints HTTP
+│   ├── AuthController.cs
+│   ├── AlumnosController.cs
+│   ├── CalificacionesController.cs
+│   └── ...
+├── Models/                # Entidades (Alumno, Asistencia, etc.)
+├── Data/                  # DbContext (AcademicoDbContext.cs)
+├── DTOs/                  # Objetos para entrada/salida (LoginDto, etc.)
+├── Services/              # JwtService para generar tokens
+├── Middleware/            # ErrorHandlingMiddleware para manejo de errores
+├── appsettings.Development.json  # Configuración con PLACEHOLDERS (sin secretos)
+├── Program.cs             # Configuración de la app
+└── README.md              # Este archivo
+```
+
+---
+
+## 🔐 Seguridad y buenas prácticas
+
+✅ **Hazlo:**
+- Usa `dotnet user-secrets` para guardar valores sensibles **localmente**
+- Revisa que `appsettings.json` no esté en git: `git ls-files | grep appsettings.json`
+- Reemplaza los valores de ejemplo antes de hacer commit
+
+❌ **No hagas:**
+- No pegues secretos en chats, PRs, ni comentarios públicos
+- No subas `appsettings.json` con contraseñas al repositorio
+- No uses claves JWT débiles (usa el generador Base64 proporcionado)
+
+Para **producción**, usa:
+- GitHub Secrets (para CI/CD)
+- Azure Key Vault
+- Variables de entorno del servidor
+
+---
+
+## 📚 Documentación adicional
+
+- **[Código de Program.cs comentado](./docs/PROGRAM_COMMENTED.md)** *(opcional)*
+- **[Código de ReportesController.cs comentado](./docs/CONTROLLERS_COMMENTED.md)** *(opcional)*
+- **Postman Collection:** Usa `utma-academico-aspnetcore.http` para probar endpoints
+
+---
+
+## 🆘 ¿Necesitas ayuda?
+
+| Problema | Solución |
+|----------|----------|
+| MySQL no conecta | Verifica que MySQL está corriendo y credenciales son correctas |
+| Swagger no abre | Comprueba que `dotnet run` dice `Now listening on: https://localhost:5001` |
+| Secret mal guardado | Usa `dotnet user-secrets remove "KEY"` y vuélvelo a crear |
+| PR no se crea | Asegúrate de haber hecho `git push -u origin feature/setup-base` |
+
+---
+
+## 📝 Checklist antes de hacer merge
+
+- [ ] Ejecuté `dotnet build` sin errores
+- [ ] Ejecuté `dotnet run` y Swagger se abre correctamente
+- [ ] Configuré `user-secrets` en mi máquina
+- [ ] Creé la rama `feature/setup-base`
+- [ ] Hice commit y push de los cambios
+- [ ] Abrí PR hacia `develop`
+- [ ] Asigné revisores
+- [ ] Respondí a comentarios de revisión (si los hay)
+- [ ] El PR fue aprobado
+- [ ] Hice merge a `develop`
+
+---
+
+## ✨ Próximos pasos
+
+Una vez mergeada esta rama:
+
+1. Todos clonamos/pulleamos la rama `develop` actualizada
+2. Cada quien configura `user-secrets` en su máquina
+3. Ejecutamos `dotnet run` y probamos Swagger
+4. Listo para empezar a desarrollar features 🚀
+
+---
+
+**Desarrollador original:** Ingeniero en Telemática — Jorge Luis Vargas Mancilla  
+**Universidad:** Universidad de Colima
+
+**Última actualización:** Noviembre 2025
