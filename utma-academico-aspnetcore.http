@@ -1,6 +1,130 @@
-@utma_academico_HostAddress = http://localhost:5234
+@baseUrl = http://localhost:5234
+@usuario = admin
+@apiKey = utma_academico_dev
+@token = {{token}}
 
-GET {{utma_academico_HostAddress}}/weatherforecast/
+# ============================================================
+# PASO 1: Obtener Token JWT
+# ============================================================
+### 1.1 POST /api/auth/login - Obtener token
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuario": "{{usuario}}",
+  "apiKey": "{{apiKey}}"
+}
+
+# Respuesta esperada:
+# {
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+#   "expiresAt": "2025-11-26T18:00:00Z"
+# }
+# 
+# ℹ️ Copia el token de la respuesta y úsalo en las siguientes requests
+# Si usas REST Client (VS Code), puedes guardar el token en la variable @token
+
+###
+
+# ============================================================
+# PASO 2: Probar Endpoints SIN TOKEN (deben retornar 401)
+# ============================================================
+
+### 2.1 GET /api/alumnos - SIN TOKEN (debe fallar con 401)
+GET {{baseUrl}}/api/alumnos
 Accept: application/json
 
 ###
+
+### 2.2 GET /api/asistencias - SIN TOKEN (debe fallar con 401)
+GET {{baseUrl}}/api/asistencias
+Accept: application/json
+
+###
+
+### 2.3 GET /api/calificaciones - SIN TOKEN (debe fallar con 401)
+GET {{baseUrl}}/api/calificaciones
+Accept: application/json
+
+###
+
+# ============================================================
+# PASO 3: Probar Endpoints CON TOKEN VÁLIDO (deben retornar 200)
+# ============================================================
+# ℹ️ Reemplaza {{token}} con el token obtenido en el login (Paso 1)
+
+### 3.1 GET /api/alumnos - CON TOKEN
+GET {{baseUrl}}/api/alumnos
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### 3.2 GET /api/asistencias - CON TOKEN
+GET {{baseUrl}}/api/asistencias
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### 3.3 GET /api/calificaciones - CON TOKEN
+GET {{baseUrl}}/api/calificaciones
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+# ============================================================
+# PASO 4: Crear nuevos registros (POST - CON TOKEN)
+# ============================================================
+
+### 4.1 POST /api/asistencias - Crear nueva asistencia
+POST {{baseUrl}}/api/asistencias
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "alumnoId": 1,
+  "materiaId": 1,
+  "fecha": "2025-11-26",
+  "presente": true
+}
+
+###
+
+### 4.2 POST /api/calificaciones - Crear nueva calificación
+POST {{baseUrl}}/api/calificaciones
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "alumnoId": 1,
+  "materiaId": 1,
+  "calificacion": 9.5,
+  "parcial": 1
+}
+
+###
+
+# ============================================================
+# INSTRUCCIONES PARA VS CODE REST CLIENT
+# ============================================================
+# 
+# 1. Instala la extensión "REST Client" (humao.rest-client)
+# 
+# 2. Para obtener el token:
+#    - Haz clic en "Send Request" en la línea del login
+#    - El token aparecerá en la respuesta JSON
+# 
+# 3. Para guardar el token automáticamente (opcional):
+#    - Abre el archivo en VS Code
+#    - Haz clic en "Send Request" del login
+#    - El response debe incluir "token"
+#    - Copia el valor y reemplaza {{token}} en las otras requests
+#
+# 4. Para usar la variable de entorno (alternativa):
+#    - Crea un archivo .env en la raíz del proyecto:
+#      token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+#    - La extensión REST Client lo lee automáticamente
+#
+# ============================================================

@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // Evitar ciclos de referencia al serializar entidades con navegación (EF Core)
+        // Evitar ciclos de referencia al serializar entidades con navegaciï¿½n (EF Core)
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         // Mantener nombres de propiedades tal cual (opcional)
         // options.JsonSerializerOptions.PropertyNamingPolicy = null;
@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen(options =>
         options.IncludeXmlComments(xmlPath);
     }
 
-    options.SwaggerDoc("v1", new() { Title = "UTMA Académico API", Version = "v1", Description = "API para seguimiento académico: calificaciones y asistencias" });
+    options.SwaggerDoc("v1", new() { Title = "UTMA Acadï¿½mico API", Version = "v1", Description = "API para seguimiento acadï¿½mico: calificaciones y asistencias" });
 
     // JWT Bearer authorization in Swagger
     var securityScheme = new OpenApiSecurityScheme
@@ -57,18 +57,19 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Configurar DbContext de EF Core para MySQL
-// Se lee la cadena de conexión desde appsettings.json (ConnectionStrings:AcademicoDb)
+// Se lee la cadena de conexiÃ³n desde appsettings.Development.json o user-secrets
 var connectionString = builder.Configuration.GetConnectionString("AcademicoDb")
-                       ?? "Server=localhost;Database=db_sys_universities;User=root;Password=utma2025;";
+                       ?? throw new InvalidOperationException("ConnectionString 'AcademicoDb' no configurada en user-secrets o appsettings");
 
 builder.Services.AddDbContext<AcademicoDbContext>(options =>
 {
-    // ServerVersion.AutoDetect detecta la versión del servidor MySQL/MySQL-compatible
+    // ServerVersion.AutoDetect detecta la versiï¿½n del servidor MySQL/MySQL-compatible
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 // JWT Authentication
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "VerySecret_SymmetricKey_ChangeThisInProduction_UTMA2025";
+var jwtKey = builder.Configuration["Jwt:Key"] 
+             ?? throw new InvalidOperationException("Jwt:Key no configurada en user-secrets o appsettings");
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "utma";
 var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "utma_users";
 
@@ -90,7 +91,7 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-// Registrar servicio de generación de tokens
+// Registrar servicio de generaciï¿½n de tokens
 builder.Services.AddScoped<JwtService>();
 
 var app = builder.Build();
@@ -103,7 +104,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "UTMA Académico API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "UTMA Acadï¿½mico API v1");
         options.RoutePrefix = "swagger"; // Swagger UI en /swagger
     });
 }
