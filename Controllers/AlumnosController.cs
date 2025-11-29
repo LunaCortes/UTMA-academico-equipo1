@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -5,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using utma_academico_aspnetcore.Data;
 using Microsoft.AspNetCore.Authorization;
 using utma_academico_aspnetcore.Exceptions;
+using utma_academico_aspnetcore.DTOs;
 
 namespace utma_academico_aspnetcore.Controllers
 {
     /// <summary>
-    /// Endpoints para consultar informaciÛn de alumnos.
-    /// Comentarios aÒadidos para explicar cada paso y consulta.
+    /// Endpoints para gestionar alumnos (CRUD completo).
+    /// Comentarios a√±adidos para explicar cada paso y consulta.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
@@ -20,7 +22,7 @@ namespace utma_academico_aspnetcore.Controllers
         private readonly AcademicoDbContext _db;
 
         /// <summary>
-        /// Constructor con inyecciÛn del DbContext
+        /// Constructor con inyecci√≥n del DbContext
         /// </summary>
         public AlumnosController(AcademicoDbContext db)
         {
@@ -29,10 +31,147 @@ namespace utma_academico_aspnetcore.Controllers
         }
 
         /// <summary>
-        /// Retorna el historial acadÈmico de un alumno: calificaciones y asistencias.
+        /// Obtiene todos los alumnos activos.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var alumnos = await _db.Alumnos
+                .AsNoTracking()
+                .Where(a => a.CodEstatus == "AC")
+                .Select(a => new
+                {
+                    a.Id,
+                    a.Matricula,
+                    a.Nombre,
+                    a.ApellidoPaterno,
+                    a.ApellidoMaterno,
+                    a.Grupo,
+                    a.Turno,
+                    a.FechaRegistro,
+                    a.CodEstatus
+                })
+                .ToListAsync();
+
+            return Ok(alumnos);
+        }
+
+        /// <summary>
+        /// Obtiene un alumno por su id.
+        /// </summary>
+        /// <param name="id">Id del alumno</param>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var alumno = await _db.Alumnos
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (alumno == null)
+                throw ExceptionCatalog.AlumnoNotFound(id);
+
+            return Ok(alumno);
+        }
+
+        /// <summary>
+        /// Crea un nuevo alumno.
+        /// Validaciones:
+        /// - Matr√≠cula √∫nica
+        /// - Campos requeridos
+        /// </summary>
+        /// <param name="dto">Datos del alumno</param>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] AlumnoCreateDto dto)
+        {
+            if (!ModelState.IsValid)
+                throw ExceptionCatalog.BadRequest("Datos inv√°lidos");
+
+            // Verificar que la matr√≠cula no exista
+            var matriculaExiste = await _db.Alumnos
+                .AnyAsync(a => a.Matricula == dto.Matricula);
+            
+            if (matriculaExiste)
+                throw ExceptionCatalog.BadRequest($"La matr√≠cula '{dto.Matricula}' ya existe.");
+
+            var alumno = new Models.Alumno
+            {
+                Matricula = dto.Matricula,
+                Nombre = dto.Nombre,
+                ApellidoPaterno = dto.ApellidoPaterno,
+                ApellidoMaterno = dto.ApellidoMaterno,
+                Grupo = dto.Grupo,
+                Turno = dto.Turno,
+                FechaRegistro = DateTime.UtcNow,
+                CodEstatus = "AC"
+            };
+
+            await _db.Alumnos.AddAsync(alumno);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetById), new { id = alumno.Id }, alumno);
+        }
+
+        /// <summary>
+        /// Actualiza un alumno existente.
+        /// </summary>
+        /// <param name="id">Id del alumno</param>
+        /// <param name="dto">Datos actualizados</param>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] AlumnoUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+                throw ExceptionCatalog.BadRequest("Datos inv√°lidos");
+
+            var alumno = await _db.Alumnos.FindAsync(id);
+            if (alumno == null)
+                throw ExceptionCatalog.AlumnoNotFound(id);
+
+            // Verificar que la matr√≠cula no est√© en uso por otro alumno
+            var matriculaExiste = await _db.Alumnos
+                .AnyAsync(a => a.Matricula == dto.Matricula && a.Id != id);
+            
+            if (matriculaExiste)
+                throw ExceptionCatalog.BadRequest($"La matr√≠cula '{dto.Matricula}' ya est√° en uso por otro alumno.");
+
+            // Actualizar propiedades
+            alumno.Matricula = dto.Matricula;
+            alumno.Nombre = dto.Nombre;
+            alumno.ApellidoPaterno = dto.ApellidoPaterno;
+            alumno.ApellidoMaterno = dto.ApellidoMaterno;
+            alumno.Grupo = dto.Grupo;
+            alumno.Turno = dto.Turno;
+            
+            if (!string.IsNullOrEmpty(dto.CodEstatus))
+                alumno.CodEstatus = dto.CodEstatus;
+
+            await _db.SaveChangesAsync();
+
+            return Ok(alumno);
+        }
+
+        /// <summary>
+        /// Elimina (marca como inactivo) un alumno.
+        /// </summary>
+        /// <param name="id">Id del alumno</param>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var alumno = await _db.Alumnos.FindAsync(id);
+            if (alumno == null)
+                throw ExceptionCatalog.AlumnoNotFound(id);
+
+            // Soft delete: marcar como eliminado en lugar de borrar f√≠sicamente
+            alumno.CodEstatus = "EL";
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Retorna el historial acad√©mico de un alumno: calificaciones y asistencias.
         /// - Busca el alumno por id (AsNoTracking para no rastrear la entidad en EF Core).
         /// - Consulta calificaciones y asistencias por alumno, incluyendo nombre de la materia.
-        /// - Devuelve un objeto con la informaciÛn consolidada.
+        /// - Devuelve un objeto con la informaci√≥n consolidada.
         /// </summary>
         /// <param name="id">Id del alumno</param>
         [HttpGet("{id}/historial")]
@@ -40,15 +179,15 @@ namespace utma_academico_aspnetcore.Controllers
         {
             // Buscar alumno en la tabla `pro_alumnos` por su Id
             var alumno = await _db.Alumnos
-                .AsNoTracking() // mejora lecturas cuando no se modificar· la entidad
+                .AsNoTracking() // mejora lecturas cuando no se modificar√° la entidad
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             if (alumno == null)
-                // Lanzamos una excepciÛn del cat·logo que nuestro middleware convertir· en 404
+                // Lanzamos una excepci√≥n del cat√°logo que nuestro middleware convertir√° en 404
                 throw ExceptionCatalog.AlumnoNotFound(id);
 
-            // Consultar calificaciones del alumno incluyendo la relaciÛn de Materia
-            // Se proyecta a un DTO anÛnimo para devolver solo campos necesarios
+            // Consultar calificaciones del alumno incluyendo la relaci√≥n de Materia
+            // Se proyecta a un DTO an√≥nimo para devolver solo campos necesarios
             var calificaciones = await _db.Calificaciones
                 .Where(c => c.AlumnoId == id)
                 .Include(c => c.Materia) // incluir para poder obtener el nombre de la materia
@@ -63,7 +202,7 @@ namespace utma_academico_aspnetcore.Controllers
                 })
                 .ToListAsync();
 
-            // Consultar asistencias del alumno, tambiÈn proyectando campos relevantes
+            // Consultar asistencias del alumno, tambi√©n proyectando campos relevantes
             var asistencias = await _db.Asistencias
                 .Where(a => a.AlumnoId == id)
                 .Include(a => a.Materia)

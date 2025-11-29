@@ -9,7 +9,7 @@ namespace utma_academico_aspnetcore.Services
 {
     /// <summary>
     /// Servicio para generar tokens JWT.
-    /// Comentarios a馻didos explicando configuraci髇 y claims.
+    /// Comentarios a帽adidos explicando configuraci贸n y claims.
     /// </summary>
     public class JwtService
     {
@@ -17,21 +17,21 @@ namespace utma_academico_aspnetcore.Services
 
         public JwtService(IConfiguration configuration)
         {
-            _configuration = configuration; // inyecta configuraci髇 para leer clave, issuer, audience
+            _configuration = configuration; // inyecta configuraci贸n para leer clave, issuer, audience
         }
 
         /// <summary>
-        /// Genera token JWT con claims b醩icos: sub (id), unique_name (username)
+        /// Genera token JWT con claims b谩sicos: sub (id), unique_name (username)
         /// Pasos:
-        /// - Leer clave/issuer/audience desde configuraci髇 (appsettings).
+        /// - Leer clave/issuer/audience desde configuraci贸n (appsettings).
         /// - Crear SymmetricSecurityKey con la clave.
         /// - Crear SigningCredentials con HmacSha256.
-        /// - Construir los claims m韓imos y crear JwtSecurityToken.
-        /// - Devolver token codificado y fecha de expiraci髇.
+        /// - Construir los claims m铆nimos y crear JwtSecurityToken.
+        /// - Devolver token codificado y fecha de expiraci贸n.
         /// </summary>
         public (string token, DateTime expires) GenerateToken(int userId, string username)
         {
-            // Leer configuraci髇 con valores por defecto (solo para desarrollo)
+            // Leer configuraci贸n con valores por defecto (solo para desarrollo)
             var key = _configuration["Jwt:Key"] ?? "VerySecret_SymmetricKey_ChangeThisInProduction_UTMA2025";
             var issuer = _configuration["Jwt:Issuer"] ?? "utma";
             var audience = _configuration["Jwt:Audience"] ?? "utma_users";
