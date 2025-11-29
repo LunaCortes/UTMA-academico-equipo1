@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:5234
-@usuario = admin
+@usuario = adminLuna
 @apiKey = utma_academico_dev
-@token = {{token}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluTHVuYSIsImp0aSI6IjBiMzA5ZDM4LWJkMGUtNDY0MC04ZWE1LTliMzljMTJkYjYyNCIsImV4cCI6MTc2NDQwMTExNCwiaXNzIjoiVVRNQSIsImF1ZCI6IlVUTUEifQ.yVHYOuehHO4sid-S2nkJ8c9alne5Qx0A-_VExyfg0XA
 
 # ============================================================
 # PASO 1: Obtener Token JWT

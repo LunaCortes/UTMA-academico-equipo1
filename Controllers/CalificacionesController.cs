@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,8 @@ using utma_academico_aspnetcore.Exceptions;
 namespace utma_academico_aspnetcore.Controllers
 {
     /// <summary>
-    /// Endpoints para manejar calificaciones.
-    /// Comentarios a馻didos para explicar la l骻ica de validaci髇 y persistencia.
+    /// Endpoints para manejar calificaciones (CRUD completo).
+    /// Comentarios a帽adidos para explicar la l贸gica de validaci贸n y persistencia.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
@@ -22,7 +23,7 @@ namespace utma_academico_aspnetcore.Controllers
         private readonly AcademicoDbContext _db;
 
         /// <summary>
-        /// Constructor con inyecci髇 de DbContext.
+        /// Constructor con inyecci贸n de DbContext.
         /// </summary>
         public CalificacionesController(AcademicoDbContext db)
         {
@@ -30,19 +31,67 @@ namespace utma_academico_aspnetcore.Controllers
         }
 
         /// <summary>
-        /// Registra una nueva calificaci髇 para un alumno en una materia.
+        /// Obtiene todas las calificaciones activas.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var calificaciones = await _db.Calificaciones
+                .AsNoTracking()
+                .Where(c => c.CodEstatus == "AC")
+                .Include(c => c.Alumno)
+                .Include(c => c.Materia)
+                .Select(c => new
+                {
+                    c.Id,
+                    AlumnoId = c.AlumnoId,
+                    AlumnoNombre = c.Alumno != null ? $"{c.Alumno.Nombre} {c.Alumno.ApellidoPaterno}" : null,
+                    MateriaId = c.MateriaId,
+                    MateriaNombre = c.Materia != null ? c.Materia.Nombre : null,
+                    c.Parcial,
+                    c.CalificacionValor,
+                    c.Fecha,
+                    c.Tipo,
+                    c.CodEstatus
+                })
+                .ToListAsync();
+
+            return Ok(calificaciones);
+        }
+
+        /// <summary>
+        /// Obtiene una calificaci贸n por su id.
+        /// </summary>
+        /// <param name="id">Id de la calificaci贸n</param>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            // Incluir las relaciones a Alumno y Materia para devolver contexto completo
+            var cal = await _db.Calificaciones
+                .Include(c => c.Alumno)
+                .Include(c => c.Materia)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cal == null)
+                throw ExceptionCatalog.BadRequest("Calificaci贸n no encontrada");
+
+            return Ok(cal);
+        }
+
+        /// <summary>
+        /// Registra una nueva calificaci贸n para un alumno en una materia.
         /// Validaciones aplicadas:
         /// - El alumno y la materia deben existir.
         /// - El parcial debe estar entre 1 y 3.
-        /// - La calificaci髇 num閞ica debe estar en el rango permitido (seg鷑 DTO 0-100).
+        /// - La calificaci贸n num茅rica debe estar en el rango permitido (seg煤n DTO 0-100).
         /// </summary>
-        /// <param name="dto">Datos de la calificaci髇</param>
+        /// <param name="dto">Datos de la calificaci贸n</param>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CalificacionCreateDto dto)
         {
-            // Validaci髇 de modelo (atributos [Required], [Range], etc.)
+            // Validaci贸n de modelo (atributos [Required], [Range], etc.)
             if (!ModelState.IsValid)
-                throw ExceptionCatalog.BadRequest("Datos inv醠idos");
+                throw ExceptionCatalog.BadRequest("Datos inv谩lidos");
 
             // Verificar existencia del alumno
             var alumno = await _db.Alumnos.FindAsync(dto.AlumnoId);
@@ -56,11 +105,11 @@ namespace utma_academico_aspnetcore.Controllers
 
             // Validar parcial
             if (dto.Parcial < 1 || dto.Parcial > 3)
-                throw ExceptionCatalog.BadRequest("Parcial inv醠ido. Debe ser 1, 2 o 3.");
+                throw ExceptionCatalog.BadRequest("Parcial inv谩lido. Debe ser 1, 2 o 3.");
 
-            // Validar rango de calificaci髇 (se repite por claridad aunque DTO ya lo valida)
+            // Validar rango de calificaci贸n (se repite por claridad aunque DTO ya lo valida)
             if (dto.Calificacion < 0 || dto.Calificacion > 100)
-                throw ExceptionCatalog.BadRequest("Calificaci髇 inv醠ida. Debe estar entre 0 y 100.");
+                throw ExceptionCatalog.BadRequest("Calificaci贸n inv谩lida. Debe estar entre 0 y 100.");
 
             // Mapear DTO a entidad
             var entidad = new Calificacion
@@ -83,22 +132,75 @@ namespace utma_academico_aspnetcore.Controllers
         }
 
         /// <summary>
-        /// Obtiene una calificaci髇 por su id.
+        /// Actualiza una calificaci贸n existente.
         /// </summary>
-        /// <param name="id">Id de la calificaci髇</param>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        /// <param name="id">Id de la calificaci贸n</param>
+        /// <param name="dto">Datos actualizados</param>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] CalificacionUpdateDto dto)
         {
-            // Incluir las relaciones a Alumno y Materia para devolver contexto completo
-            var cal = await _db.Calificaciones
-                .Include(c => c.Alumno)
-                .Include(c => c.Materia)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            if (!ModelState.IsValid)
+                throw ExceptionCatalog.BadRequest("Datos inv谩lidos");
 
-            if (cal == null)
-                throw ExceptionCatalog.BadRequest("Calificaci髇 no encontrada");
+            var calificacion = await _db.Calificaciones.FindAsync(id);
+            if (calificacion == null)
+                throw ExceptionCatalog.BadRequest("Calificaci贸n no encontrada");
 
-            return Ok(cal);
+            // Verificar existencia del alumno
+            var alumno = await _db.Alumnos.FindAsync(dto.AlumnoId);
+            if (alumno == null)
+                throw ExceptionCatalog.AlumnoNotFound(dto.AlumnoId);
+
+            // Verificar existencia de la materia
+            var materia = await _db.Materias.FindAsync(dto.MateriaId);
+            if (materia == null)
+                throw ExceptionCatalog.MateriaNotFound(dto.MateriaId);
+
+            // Validar parcial
+            if (dto.Parcial < 1 || dto.Parcial > 3)
+                throw ExceptionCatalog.BadRequest("Parcial inv谩lido. Debe ser 1, 2 o 3.");
+
+            // Validar rango de calificaci贸n
+            if (dto.Calificacion < 0 || dto.Calificacion > 100)
+                throw ExceptionCatalog.BadRequest("Calificaci贸n inv谩lida. Debe estar entre 0 y 100.");
+
+            // Actualizar propiedades
+            calificacion.AlumnoId = dto.AlumnoId;
+            calificacion.MateriaId = dto.MateriaId;
+            calificacion.Parcial = dto.Parcial;
+            calificacion.CalificacionValor = dto.Calificacion;
+            
+            if (!string.IsNullOrEmpty(dto.Tipo))
+                calificacion.Tipo = dto.Tipo;
+            
+            if (!string.IsNullOrEmpty(dto.CodEstatus))
+                calificacion.CodEstatus = dto.CodEstatus;
+
+            await _db.SaveChangesAsync();
+
+            // Recargar con relaciones para devolver contexto completo
+            await _db.Entry(calificacion).Reference(c => c.Alumno).LoadAsync();
+            await _db.Entry(calificacion).Reference(c => c.Materia).LoadAsync();
+
+            return Ok(calificacion);
+        }
+
+        /// <summary>
+        /// Elimina (marca como inactivo) una calificaci贸n.
+        /// </summary>
+        /// <param name="id">Id de la calificaci贸n</param>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var calificacion = await _db.Calificaciones.FindAsync(id);
+            if (calificacion == null)
+                throw ExceptionCatalog.BadRequest("Calificaci贸n no encontrada");
+
+            // Soft delete: marcar como eliminado en lugar de borrar f铆sicamente
+            calificacion.CodEstatus = "EL";
+            await _db.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
