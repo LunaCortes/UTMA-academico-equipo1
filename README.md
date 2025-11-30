@@ -1,281 +1,182 @@
-# 🎓 UTMA-Académico — ASP.NET Core Web API
+# UTMA-Académico — ASP.NET Core Web API 🎓
 
-> **Guía rápida de configuración local para estudiantes**
+**Backend académico universitario – Equipo 1**  
+Proyecto basado en la plantilla oficial del profesor (2025).
+
+> **Estado actual:** ¡Listo para desarrollo! ✅  
+> Seguridad mejorada: secretos fuera del repositorio, autenticación JWT + base de datos probada.
+---
+
+## Descripción del proyecto 📚
+
+UTMA-Académico es una **API REST en ASP.NET Core 8** que permite gestionar información académica básica:
+
+- **Alumnos, materias, calificaciones y asistencias**.
+- **Autenticación con JWT** (token Bearer en los encabezados).
+- Acceso a **reportes** (por ejemplo, alumnos con bajo rendimiento).
+- Documentación interactiva con **Swagger**.
+
+Está pensada como base de práctica para alumnos que están empezando con .NET, C#, EF Core y JWT.
 
 ---
 
-## 📋 Equipo de desarrollo
+## Equipo de desarrollo 👨‍💻👩‍💻
 
-| Nombre | Rol |
-|--------|-----|
-| Alumno 1 - Jose Guillermo Mottu Vazquez 
-| Alumno 2 - Luna Ximena Cortes Gonzalez 
-
+| Nombre                            | GitHub            |
+|-----------------------------------|-------------------|
+| José Guillermo Mottu Vázquez      | @guillermomottu   |
+| Luna Ximena Cortés González       | @LunaCortes       |
 
 ---
 
-## 🚀 Inicio rápido (5 minutos)
+## Requisitos previos 🧩
 
-### Paso 1: Clonar el repositorio
+Antes de intentar ejecutar la API, asegúrate de tener instalado:
+
+- **SDK .NET 8**  
+  - Puedes verificar con:  
+    ```powershell
+    dotnet --version
+    ```
+- **Motor de base de datos**  
+  - MySQL o MariaDB (local o en contenedor).  
+  - Usuario con permisos para crear BD y ejecutar scripts (`db_sys_universities.sql`).
+- **Herramientas recomendadas**
+  - Git
+  - PowerShell (en Windows) o cualquier terminal
+  - Visual Studio 2022 / Visual Studio Code
+  - Postman (opcional, para probar la API)
+
+---
+
+## Puesta en marcha rápida (TL;DR) ⚡
+
+1. Clonar el repositorio y cambiar a la rama `develop`.
+2. Configurar **user-secrets** (`ConnectionStrings:AcademicoDb`, `Jwt:Key`, `Authentication:TestApiKey`).
+3. Crear la base de datos ejecutando los scripts SQL en la carpeta `bd/`.
+4. Ejecutar:
+   ```powershell
+   dotnet run --project utma-academico-aspnetcore.csproj
+   ```
+5. Abrir Swagger en el navegador y probar los endpoints:
+   - `https://localhost:PUERTO/swagger`
+
+Más detalles en la siguiente sección.
+
+---
+
+## Pasos para levantar la API en local 🛠️
+
+### 1. Clonar el repositorio del equipo
 
 ```powershell
-git clone <REPO_URL>
-cd utma-academico-aspnetcore
+git clone https://github.com/LunaCortes/UTMA-academico-equipo1.git
+cd UTMA-academico-equipo1
 git checkout develop
 ```
 
-### Paso 2: Configurar `dotnet user-secrets` (cada integrante)
+---
 
-Los secretos (contraseñas, claves JWT) se guardan **localmente en tu máquina**, no en Git.
+### 2. Configurar `user-secrets` (solo una vez por máquina)
 
-#### 2.1 Inicializar user-secrets
+Desde la **raíz del proyecto**:
 
 ```powershell
-cd C:\Users\TU_USUARIO\Documents\utma-academico-aspnetcore
-
-# Ejecuta esto solo una vez por proyecto
-dotnet user-secrets init --project .\utma-academico-aspnetcore.csproj
+dotnet user-secrets init
 ```
 
-#### 2.2 Añadir valores sensibles
-
-Genera primero una clave JWT segura:
+#### 2.1. Cadena de conexión MySQL 🔐
 
 ```powershell
-# Genera una clave JWT (copia la salida)
+dotnet user-secrets set "ConnectionStrings:AcademicoDb" "Server=localhost;Database=db_sys_universities;User=root;Password=TU_CONTRASEÑA_AQUÍ"
+```
+
+#### 2.2. Clave JWT segura (32 bytes → Base64) 🔑
+
+```powershell
 $bytes = New-Object byte[] 32
 [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
-[Convert]::ToBase64String($bytes)
+$jwtKey = [Convert]::ToBase64String($bytes)
+Write-Host "Tu clave JWT (guárdala): $jwtKey"
+dotnet user-secrets set "Jwt:Key" "$jwtKey"
 ```
 
-Luego, añade los secretos (reemplaza valores):
+#### 2.3. ApiKey de desarrollo (para login de prueba) 🧪
 
 ```powershell
-# Cadena de conexión MySQL
-dotnet user-secrets set "ConnectionStrings:AcademicoDb" "Server=localhost;Database=db_sys_universities;User=root;Password=tu_contraseña" --project .\utma-academico-aspnetcore.csproj
-
-# Clave JWT (pega la generada arriba)
-dotnet user-secrets set "Jwt:Key" "TU_CLAVE_JWT_BASE64_AQUI" --project .\utma-academico-aspnetcore.csproj
-
-# API Key de prueba
-dotnet user-secrets set "Authentication:TestApiKey" "utma_academico_dev" --project .\utma-academico-aspnetcore.csproj
+dotnet user-secrets set "Authentication:TestApiKey" "utma_academico_dev"
 ```
 
-#### 2.3 Verificar que quedaron guardados
+#### 2.4. Verificar que los secretos quedaron guardados
 
 ```powershell
-dotnet user-secrets list --project .\utma-academico-aspnetcore.csproj
+dotnet user-secrets list
 ```
 
-> ✅ Deberías ver las 3 claves listadas
+Debes ver algo similar a:
 
-### Paso 3: Construir la API
-
-```powershell
-dotnet build .\utma-academico-aspnetcore.csproj
-```
-
-### Paso 4: Ejecutar y probar Swagger
-
-```powershell
-dotnet run --project .\utma-academico-aspnetcore.csproj
-```
-
-En la consola verás algo como:
-
-```
-Now listening on: https://localhost:5001
-```
-
-**Abre en tu navegador:** `https://localhost:5001/swagger`
-
-> 🎉 ¡Si ves la interfaz Swagger, todo está funcionando!
+- `ConnectionStrings:AcademicoDb = Server=localhost;Database=db_sys_universities;...`
+- `Jwt:Key = TuClaveSuperSeguraBase64Aqui==`
+- `Authentication:TestApiKey = utma_academico_dev`
 
 ---
 
-## 🔧 Troubleshooting (solución de problemas)
+### 3. Crear la base de datos MySQL 🗄️
 
-### ❌ Error: "Connection string failed"
+En la carpeta `bd/` vienen los scripts necesarios.
 
-**Solución:** Verifica que tus `user-secrets` están correctos:
-
-```powershell
-dotnet user-secrets list --project .\utma-academico-aspnetcore.csproj
-```
-
-Revisa que:
-- MySQL esté corriendo (`Server=localhost`)
-- El usuario y contraseña sean válidos
-- La base de datos `db_sys_universities` exista
-
-### ❌ Error: "Cannot init user-secrets"
-
-**Solución:** Asegúrate de estar en la carpeta correcta:
+Desde la raíz del proyecto:
 
 ```powershell
-# Verifica que estés aquí
-Get-Location
-
-# Debe mostrar: C:\Users\...\utma-academico-aspnetcore
+cd bd
 ```
 
-### ❌ Error: Caracteres especiales en la clave JWT
-
-**Solución:** No uses apóstrofos (`'`) ni comillas sin cerrar. Regenera usando el comando Base64:
+#### 3.1. Crear estructura de tablas
 
 ```powershell
-# Elimina la clave anterior
-dotnet user-secrets remove "Jwt:Key" --project .\utma-academico-aspnetcore.csproj
-
-# Genera una nueva sin caracteres especiales
-$bytes = New-Object byte[] 32
-[System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
-[Convert]::ToBase64String($bytes)
+mysql -u root -p < db_sys_universities.sql
 ```
 
----
+> En PowerShell, si el operador `<` te da error, usa:
+> ```powershell
+> cmd /c "mysql -u root -p < db_sys_universities.sql"
+> ```
 
-## 🌳 Git Flow: Crear rama y abrir PR
-
-### Paso 1: Crear rama `feature/setup-base`
+#### 3.2. Insertar usuario admin de prueba
 
 ```powershell
-git checkout -b feature/setup-base
+mysql -u root -p < setup_admin_user.sql
 ```
 
-### Paso 2: Commitear cambios
+> En PowerShell:
+> ```powershell
+> cmd /c "mysql -u root -p < setup_admin_user.sql"
+> ```
+
+Credenciales de desarrollo:
+
+- **Usuario**: `admin`  
+- **ApiKey**: `utma_academico_dev`  
+- **Contraseña**: `admin123` (ya viene hasheada con BCrypt en el script).
+
+#### 3.3. Cargar datos de ejemplo (alumnos + calificaciones) 🧪
+
+Para tener 20 alumnos y ~120 calificaciones listas para probar:
 
 ```powershell
-# Añadir archivos modificados
-git add appsettings.Development.json README.md
-
-# Crear commit
-git commit -m "chore: add appsettings.Development.json and setup docs"
-
-# Subir rama al remoto
-git push -u origin feature/setup-base
+mysql -u root -p db_sys_universities < seed_data.sql
 ```
 
-### Paso 3: Abrir Pull Request
+> En PowerShell:
+> ```powershell
+> cmd /c "mysql -u root -p db_sys_universities < seed_data.sql"
+> ```
 
-#### Opción A: GitHub Web (más fácil)
+O desde el cliente de MySQL interactivo:
 
-1. Ve a https://github.com/LunaCortes/UTMA-academico-equipo1
-2. Haz clic en **Compare & pull request**
-3. Selecciona:
-   - **Base:** `develop`
-   - **Compare:** `feature/setup-base`
-4. Añade descripción y asigna revisores
-5. Haz clic en **Create pull request**
-
-#### Opción B: GitHub CLI
-
-```powershell
-gh pr create \
-  --base develop \
-  --head feature/setup-base \
-  --title "Setup: base config and docs" \
-  --body "Añade appsettings.Development.json con placeholders y pasos para configurar user-secrets localmente."
-```
-
-### Paso 4: Mergear (después de revisión)
-
-```powershell
-# Espera a que un compañero apruebe el PR en GitHub
-# Luego, desde la interfaz web, haz clic en "Merge pull request"
-
-# O con GitHub CLI:
-gh pr merge --merge
+```sql
+USE db_sys_universities;
+SOURCE seed_data.sql;
 ```
 
 ---
-
-## 📁 Estructura del proyecto
-
-```
-utma-academico-aspnetcore/
-├── Controllers/           # Endpoints HTTP
-│   ├── AuthController.cs
-│   ├── AlumnosController.cs
-│   ├── CalificacionesController.cs
-│   └── ...
-├── Models/                # Entidades (Alumno, Asistencia, etc.)
-├── Data/                  # DbContext (AcademicoDbContext.cs)
-├── DTOs/                  # Objetos para entrada/salida (LoginDto, etc.)
-├── Services/              # JwtService para generar tokens
-├── Middleware/            # ErrorHandlingMiddleware para manejo de errores
-├── appsettings.Development.json  # Configuración con PLACEHOLDERS (sin secretos)
-├── Program.cs             # Configuración de la app
-└── README.md              # Este archivo
-```
-
----
-
-## 🔐 Seguridad y buenas prácticas
-
-✅ **Hazlo:**
-- Usa `dotnet user-secrets` para guardar valores sensibles **localmente**
-- Revisa que `appsettings.json` no esté en git: `git ls-files | grep appsettings.json`
-- Reemplaza los valores de ejemplo antes de hacer commit
-
-❌ **No hagas:**
-- No pegues secretos en chats, PRs, ni comentarios públicos
-- No subas `appsettings.json` con contraseñas al repositorio
-- No uses claves JWT débiles (usa el generador Base64 proporcionado)
-
-Para **producción**, usa:
-- GitHub Secrets (para CI/CD)
-- Azure Key Vault
-- Variables de entorno del servidor
-
----
-
-## 📚 Documentación adicional
-
-- **[Código de Program.cs comentado](./docs/PROGRAM_COMMENTED.md)** *(opcional)*
-- **[Código de ReportesController.cs comentado](./docs/CONTROLLERS_COMMENTED.md)** *(opcional)*
-- **Postman Collection:** Usa `utma-academico-aspnetcore.http` para probar endpoints
-
----
-
-## 🆘 ¿Necesitas ayuda?
-
-| Problema | Solución |
-|----------|----------|
-| MySQL no conecta | Verifica que MySQL está corriendo y credenciales son correctas |
-| Swagger no abre | Comprueba que `dotnet run` dice `Now listening on: https://localhost:5001` |
-| Secret mal guardado | Usa `dotnet user-secrets remove "KEY"` y vuélvelo a crear |
-| PR no se crea | Asegúrate de haber hecho `git push -u origin feature/setup-base` |
-
----
-
-## 📝 Checklist antes de hacer merge
-
-- [ ] Ejecuté `dotnet build` sin errores
-- [ ] Ejecuté `dotnet run` y Swagger se abre correctamente
-- [ ] Configuré `user-secrets` en mi máquina
-- [ ] Creé la rama `feature/setup-base`
-- [ ] Hice commit y push de los cambios
-- [ ] Abrí PR hacia `develop`
-- [ ] Asigné revisores
-- [ ] Respondí a comentarios de revisión (si los hay)
-- [ ] El PR fue aprobado
-- [ ] Hice merge a `develop`
-
----
-
-## ✨ Próximos pasos
-
-Una vez mergeada esta rama:
-
-1. Todos clonamos/pulleamos la rama `develop` actualizada
-2. Cada quien configura `user-secrets` en su máquina
-3. Ejecutamos `dotnet run` y probamos Swagger
-4. Listo para empezar a desarrollar features 🚀
-
----
-
-**Desarrollador original:** Ingeniero en Telemática — Jorge Luis Vargas Mancilla  
-**Universidad:** Universidad de Colima
-
-**Última actualización:** Noviembre 2025
