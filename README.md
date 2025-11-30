@@ -57,13 +57,6 @@ Antes de intentar ejecutar la API, asegúrate de tener instalado:
 4. Ejecutar:
    ```powershell
    dotnet run --project utma-academico-aspnetcore.csproj
-   ```
-5. Abrir Swagger en el navegador y probar los endpoints:
-   - `https://localhost:PUERTO/swagger`
-
-Más detalles en la siguiente sección.
-
----
 
 ## Pasos para levantar la API en local 🛠️
 
@@ -178,5 +171,3 @@ O desde el cliente de MySQL interactivo:
 USE db_sys_universities;
 SOURCE seed_data.sql;
 ```
-
----
