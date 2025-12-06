@@ -1,18 +1,18 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using utma_academico_aspnetcore.Data;
 using utma_academico_aspnetcore.DTOs;
 using utma_academico_aspnetcore.Services;
 using utma_academico_aspnetcore.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using BCrypt.Net;
 
 namespace utma_academico_aspnetcore.Controllers
 {
     /// <summary>
-    /// Endpoint de autenticaci髇 para obtener tokens JWT en desarrollo.
-    /// Comentarios a馻didos para explicar el proceso de autenticaci髇 y emisi髇 de token.
+    /// Endpoint de autenticaci贸n para obtener tokens JWT.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
@@ -20,48 +20,87 @@ namespace utma_academico_aspnetcore.Controllers
     {
         private readonly AcademicoDbContext _db;
         private readonly JwtService _jwtService;
-        private readonly IConfiguration _configuration;
 
-        public AuthController(AcademicoDbContext db, JwtService jwtService, IConfiguration configuration)
+        public AuthController(AcademicoDbContext db, JwtService jwtService)
         {
             _db = db;
             _jwtService = jwtService;
-            _configuration = configuration;
         }
 
         /// <summary>
-        /// Obtener token JWT de prueba. Requiere el apiKey configurado en appsettings (Authentication:TestApiKey).
-        /// Flujo:
-        /// - Cliente env韆 usuario + apiKey.
-        /// - Se verifica apiKey contra configuraci髇 (solo en dev).
-        /// - Se busca el usuario en la BD.
-        /// - Si existe, se genera un token JWT con `JwtService`.
-        /// - Se retorna el token al cliente.
+        /// Obtener token JWT usando email y contrase帽a.
+        /// Valida las credenciales con BCrypt y genera un token con informaci贸n de usuario y rol.
         /// </summary>
-        /// <param name="dto">Usuario + ApiKey</param>
+        /// <param name="dto">Email y contrase帽a del usuario</param>
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginMedicoDto? dto)
         {
-            // Validaci髇 del modelo (campos requeridos)
+            // Validar que el DTO no sea null
+            if (dto == null)
+            {
+                return BadRequest(new { 
+                    message = "El cuerpo de la petici贸n es requerido. Debe incluir emailUsuario y passwordUsuario.",
+                    errors = new { 
+                        dto = new[] { "El objeto de login es requerido" }
+                    }
+                });
+            }
+
+            // Limpiar caracteres de nueva l铆nea y espacios en blanco
+            if (!string.IsNullOrEmpty(dto.EmailUsuario))
+                dto.EmailUsuario = dto.EmailUsuario.Trim();
+            
+            if (!string.IsNullOrEmpty(dto.PasswordUsuario))
+                dto.PasswordUsuario = dto.PasswordUsuario.Trim().Replace("\n", "").Replace("\r", "");
+
+            // Validaci贸n del modelo
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            {
+                var errors = ModelState
+                    .Where(x => x.Value?.Errors.Count > 0)
+                    .ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? Array.Empty<string>()
+                    );
+                
+                return BadRequest(new { 
+                    message = "Error de validaci贸n",
+                    errors = errors
+                });
+            }
 
-            // Verificar apiKey de prueba en configuraci髇
-            var configuredKey = _configuration["Authentication:TestApiKey"];
-            if (string.IsNullOrEmpty(configuredKey) || dto.ApiKey != configuredKey)
-                throw ExceptionCatalog.Unauthorized("ApiKey inv醠ida para emisi髇 de token.");
+            // Buscar usuario por email
+            var usuario = await _db.Usuarios
+                .Include(u => u.Rol)
+                .FirstOrDefaultAsync(u => u.emailUsuario == dto.EmailUsuario);
 
-            // Buscar usuario por login
-            var usuario = await _db.Usuarios.FirstOrDefaultAsync(u => u.UsuarioLogin == dto.Usuario);
             if (usuario == null)
-                throw ExceptionCatalog.UsuarioNotFound(dto.Usuario);
+                throw ExceptionCatalog.Unauthorized("Credenciales inv谩lidas.");
 
-            // Generar token y fecha de expiraci髇
-            var (token, expires) = _jwtService.GenerateToken(usuario.Id, usuario.UsuarioLogin);
+            if (!usuario.activo)
+                throw ExceptionCatalog.Unauthorized("Usuario inactivo.");
+
+            // Validar contrase帽a con BCrypt
+            if (!BCrypt.Net.BCrypt.Verify(dto.PasswordUsuario, usuario.passwordUsuario))
+                throw ExceptionCatalog.Unauthorized("Credenciales inv谩lidas.");
+
+            // Obtener nombre del rol
+            var nombreRol = usuario.Rol?.nombreRol ?? "Usuario";
+
+            // Generar token con informaci贸n de usuario y rol
+            var (token, expires) = _jwtService.GenerateToken(
+                usuario.idUsuario,
+                usuario.emailUsuario,
+                nombreRol
+            );
 
             // Retornar token en DTO
-            return Ok(new TokenResponseDto { Token = token, ExpiresAt = expires });
+            return Ok(new TokenResponseDto
+            {
+                Token = token,
+                ExpiresAt = expires
+            });
         }
     }
 }

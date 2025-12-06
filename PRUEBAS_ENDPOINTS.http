@@ -1,0 +1,321 @@
+### ============================================
+### PRUEBAS COMPLETAS DE ENDPOINTS
+### Sistema de Gestión de Citas Médicas
+### ============================================
+### 
+### INSTRUCCIONES:
+### 1. Reemplaza {{baseUrl}} con tu URL (ej: https://localhost:7000)
+### 2. Ejecuta primero el login para obtener el token
+### 3. Copia el token y reemplaza {{token}} en los headers
+### 4. Ejecuta los endpoints en orden
+###
+### Base URL - Ajusta según tu configuración
+### IMPORTANTE: Usa HTTP o HTTPS según el puerto que esté escuchando el servidor
+### Si el servidor muestra "http://localhost:5234" → usa http://
+### Si el servidor muestra "https://localhost:7275" → usa https://
+@baseUrl = http://localhost:5234
+# @baseUrl = https://localhost:7275  # Descomenta esta línea si usas HTTPS
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkBjbGluaWNhLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW5AY2xpbmljYS5jb20iLCJpZFVzdWFyaW8iOiIxIiwianRpIjoiZjM1ZDIyMTctN2Y2OS00ODE2LWE5ZWMtZmMzYWRhM2NhNjA5IiwiZXhwIjoxNzY1MDA3MTQzLCJpc3MiOiJVVE1BIiwiYXVkIjoiVVRNQSJ9.snQT0NXNV9PUQr6CnP4eQnmpTtwKrKxQnr3_0Kf7MfU
+
+### ============================================
+### 1. AUTENTICACIÓN
+### ============================================
+
+### Login - Obtener Token JWT
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "emailUsuario": "admin@clinica.com",
+  "passwordUsuario": "admin123"
+}
+
+### ============================================
+### 2. CATÁLOGOS
+### ============================================
+
+### Obtener Roles
+GET {{baseUrl}}/api/catalogos/roles
+Authorization: Bearer {{token}}
+
+### Obtener Especialidades
+GET {{baseUrl}}/api/catalogos/especialidades
+Authorization: Bearer {{token}}
+
+### Obtener Estados de Cita
+GET {{baseUrl}}/api/catalogos/estados-cita
+Authorization: Bearer {{token}}
+
+### ============================================
+### 3. USUARIOS
+### ============================================
+
+### Obtener Todos los Usuarios (Requiere rol Administrador)
+GET {{baseUrl}}/api/usuarios
+Authorization: Bearer {{token}}
+
+### Obtener Usuario por ID
+GET {{baseUrl}}/api/usuarios/1
+Authorization: Bearer {{token}}
+
+### Crear Nuevo Usuario (Requiere rol Administrador)
+POST {{baseUrl}}/api/usuarios
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombreUsuario": "nuevo_usuario",
+  "emailUsuario": "nuevo@clinica.com",
+  "passwordUsuario": "password123",
+  "idRol": 1
+}
+
+### ============================================
+### 4. PACIENTES (CRUD Completo)
+### ============================================
+
+### Obtener Todos los Pacientes
+GET {{baseUrl}}/api/pacientes
+Authorization: Bearer {{token}}
+
+### Obtener Paciente por ID
+GET {{baseUrl}}/api/pacientes/1
+Authorization: Bearer {{token}}
+
+### Crear Nuevo Paciente (Requiere rol Administrador o Recepcionista)
+POST {{baseUrl}}/api/pacientes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombrePaciente": "Juan",
+  "apellidoPaternoPaciente": "Pérez",
+  "apellidoMaternoPaciente": "García",
+  "fechaNacimientoPaciente": "1990-05-15",
+  "telefonoPaciente": "5551234567",
+  "emailPaciente": "juan.perez@email.com",
+  "direccionPaciente": "Calle Principal 123",
+  "numeroSeguroSocial": "123456789",
+  "tipoSangrePaciente": "O+",
+  "alergiasPaciente": "Ninguna",
+  "idUsuario": 3
+}
+
+### Actualizar Paciente (Requiere rol Administrador o Recepcionista)
+PUT {{baseUrl}}/api/pacientes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombrePaciente": "Juan",
+  "apellidoPaternoPaciente": "Pérez",
+  "apellidoMaternoPaciente": "García",
+  "fechaNacimientoPaciente": "1990-05-15",
+  "telefonoPaciente": "5551234567",
+  "emailPaciente": "juan.perez.actualizado@email.com",
+  "direccionPaciente": "Calle Principal 456",
+  "numeroSeguroSocial": "123456789",
+  "tipoSangrePaciente": "O+",
+  "alergiasPaciente": "Polen",
+  "idUsuario": 3
+}
+
+### Eliminar Paciente (Requiere rol Administrador)
+DELETE {{baseUrl}}/api/pacientes/1
+Authorization: Bearer {{token}}
+
+### ============================================
+### 5. MÉDICOS (CRUD Completo)
+### ============================================
+
+### Obtener Todos los Médicos Activos
+GET {{baseUrl}}/api/medicos
+Authorization: Bearer {{token}}
+
+### Obtener Médico por ID
+GET {{baseUrl}}/api/medicos/1
+Authorization: Bearer {{token}}
+
+### Crear Nuevo Médico (Requiere rol Administrador)
+POST {{baseUrl}}/api/medicos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombreMedico": "Dr. Carlos",
+  "apellidoPaternoMedico": "Martínez",
+  "apellidoMaternoMedico": "López",
+  "cedulaProfesionalMedico": "CED123456",
+  "idEspecialidad": 1,
+  "telefonoMedico": "5559876543",
+  "emailMedico": "carlos.martinez@clinica.com",
+  "consultorioMedico": "Consultorio 101",
+  "horarioInicioMedico": "09:00:00",
+  "horarioFinMedico": "17:00:00",
+  "idUsuario": 2
+}
+
+### Actualizar Médico (Requiere rol Administrador)
+PUT {{baseUrl}}/api/medicos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombreMedico": "Dr. Carlos",
+  "apellidoPaternoMedico": "Martínez",
+  "apellidoMaternoMedico": "López",
+  "cedulaProfesionalMedico": "CED123456",
+  "idEspecialidad": 1,
+  "telefonoMedico": "5559876543",
+  "emailMedico": "carlos.martinez.actualizado@clinica.com",
+  "consultorioMedico": "Consultorio 102",
+  "horarioInicioMedico": "08:00:00",
+  "horarioFinMedico": "16:00:00",
+  "idUsuario": 2
+}
+
+### Desactivar Médico (Requiere rol Administrador)
+DELETE {{baseUrl}}/api/medicos/1
+Authorization: Bearer {{token}}
+
+### ============================================
+### 6. HORARIOS DISPONIBLES
+### ============================================
+
+### Obtener Todos los Horarios
+GET {{baseUrl}}/api/horarios
+Authorization: Bearer {{token}}
+
+### Obtener Horarios por Médico
+GET {{baseUrl}}/api/horarios?idMedico=1
+Authorization: Bearer {{token}}
+
+### Obtener Horario por ID
+GET {{baseUrl}}/api/horarios/1
+Authorization: Bearer {{token}}
+
+### Crear Nuevo Horario (Requiere rol Administrador o Médico)
+POST {{baseUrl}}/api/horarios
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idMedico": 1,
+  "fechaDisponible": "2024-12-10",
+  "horaInicioDisponible": "10:00:00",
+  "horaFinDisponible": "11:00:00"
+}
+
+### Actualizar Horario (Requiere rol Administrador o Médico)
+PUT {{baseUrl}}/api/horarios/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idMedico": 1,
+  "fechaDisponible": "2024-12-10",
+  "horaInicioDisponible": "10:30:00",
+  "horaFinDisponible": "11:30:00"
+}
+
+### Eliminar Horario (Requiere rol Administrador o Médico)
+DELETE {{baseUrl}}/api/horarios/1
+Authorization: Bearer {{token}}
+
+### ============================================
+### 7. CITAS MÉDICAS (CRUD Completo)
+### ============================================
+
+### Obtener Todas las Citas
+GET {{baseUrl}}/api/citas
+Authorization: Bearer {{token}}
+
+### Obtener Citas por Paciente
+GET {{baseUrl}}/api/citas?idPaciente=1
+Authorization: Bearer {{token}}
+
+### Obtener Citas por Médico
+GET {{baseUrl}}/api/citas?idMedico=1
+Authorization: Bearer {{token}}
+
+### Obtener Cita por ID
+GET {{baseUrl}}/api/citas/1
+Authorization: Bearer {{token}}
+
+### Crear Nueva Cita (Requiere rol Administrador, Recepcionista o Paciente)
+POST {{baseUrl}}/api/citas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idPaciente": 1,
+  "idMedico": 1,
+  "fechaCita": "2024-12-10",
+  "horaCita": "10:00:00",
+  "motivoCita": "Consulta general",
+  "observacionesCita": "Primera consulta",
+  "duracionEstimadaCita": 30,
+  "costoConsulta": 500.00
+}
+
+### Actualizar Cita (Requiere rol Administrador o Recepcionista)
+PUT {{baseUrl}}/api/citas/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "idPaciente": 1,
+  "idMedico": 1,
+  "fechaCita": "2024-12-10",
+  "horaCita": "11:00:00",
+  "motivoCita": "Consulta general - Actualizada",
+  "observacionesCita": "Primera consulta - Reagendada",
+  "duracionEstimadaCita": 45,
+  "costoConsulta": 600.00
+}
+
+### Actualizar Estado de Cita (Requiere rol Administrador, Médico o Recepcionista)
+PUT {{baseUrl}}/api/citas/1/estado
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+2
+
+### Eliminar Cita (Requiere rol Administrador)
+DELETE {{baseUrl}}/api/citas/1
+Authorization: Bearer {{token}}
+
+### ============================================
+### PRUEBAS DE ERRORES Y VALIDACIONES
+### ============================================
+
+### Login con credenciales inválidas
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "emailUsuario": "noexiste@clinica.com",
+  "passwordUsuario": "password123"
+}
+
+### Intentar acceder sin token (debe retornar 401)
+GET {{baseUrl}}/api/pacientes
+
+### Intentar crear paciente con email duplicado
+POST {{baseUrl}}/api/pacientes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombrePaciente": "Test",
+  "apellidoPaternoPaciente": "Test",
+  "apellidoMaternoPaciente": "Test",
+  "fechaNacimientoPaciente": "1990-01-01",
+  "emailPaciente": "juan.perez@email.com",
+  "idUsuario": 3
+}
+
+### Obtener paciente inexistente (debe retornar error)
+GET {{baseUrl}}/api/pacientes/9999
+Authorization: Bearer {{token}}
+

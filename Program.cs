@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using utma_academico_aspnetcore.Services;
 using System.Text.Json.Serialization;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +16,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        // Evitar ciclos de referencia al serializar entidades con navegaci�n (EF Core)
+        // Evitar ciclos de referencia al serializar entidades con navegación (EF Core)
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         // Mantener nombres de propiedades tal cual (opcional)
         // options.JsonSerializerOptions.PropertyNamingPolicy = null;
+        // Permitir comentarios y trailing commas en JSON
+        options.JsonSerializerOptions.ReadCommentHandling = System.Text.Json.JsonCommentHandling.Skip;
+        options.JsonSerializerOptions.AllowTrailingCommas = true;
+    })
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        // Personalizar respuestas de validación
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errors = context.ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray() ?? Array.Empty<string>()
+                );
+
+            return new BadRequestObjectResult(new
+            {
+                type = "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+                title = "One or more validation errors occurred.",
+                status = 400,
+                errors = errors,
+                traceId = context.HttpContext.TraceIdentifier
+            });
+        };
     });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -31,7 +58,7 @@ builder.Services.AddSwaggerGen(options =>
         options.IncludeXmlComments(xmlPath);
     }
 
-    options.SwaggerDoc("v1", new() { Title = "UTMA Acad�mico API", Version = "v1", Description = "API para seguimiento acad�mico: calificaciones y asistencias" });
+    options.SwaggerDoc("v1", new() { Title = "Sistema de Gestión de Citas Médicas API", Version = "v1", Description = "API para gestión de citas médicas: pacientes, médicos, horarios y citas" });
 
     // JWT Bearer authorization in Swagger
     var securityScheme = new OpenApiSecurityScheme
@@ -63,15 +90,15 @@ var connectionString = builder.Configuration.GetConnectionString("AcademicoDb")
 
 builder.Services.AddDbContext<AcademicoDbContext>(options =>
 {
-    // ServerVersion.AutoDetect detecta la versi�n del servidor MySQL/MySQL-compatible
+    // ServerVersion.AutoDetect detecta la versión del servidor MySQL/MySQL-compatible
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] 
              ?? throw new InvalidOperationException("Jwt:Key no configurada en user-secrets o appsettings");
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "utma";
-var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "utma_users";
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "UTMA";
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "UTMA";
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
@@ -87,12 +114,24 @@ builder.Services.AddAuthentication("Bearer")
             ValidateAudience = true,
             ValidAudience = jwtAudience,
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero
+            ClockSkew = TimeSpan.Zero,
+            RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         };
     });
 
-// Registrar servicio de generaci�n de tokens
+// Configurar autorización por roles
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrador"));
+    options.AddPolicy("MedicoOrAdmin", policy => policy.RequireRole("Administrador", "Médico"));
+});
+
+// Registrar servicios
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<CitaService>();
+builder.Services.AddScoped<PacienteService>();
+builder.Services.AddScoped<MedicoService>();
+builder.Services.AddScoped<HorarioService>();
 
 var app = builder.Build();
 
@@ -104,7 +143,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "UTMA Acad�mico API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Sistema de Gestión de Citas Médicas API v1");
         options.RoutePrefix = "swagger"; // Swagger UI en /swagger
     });
 }

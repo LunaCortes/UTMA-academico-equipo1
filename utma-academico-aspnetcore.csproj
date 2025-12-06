@@ -13,9 +13,11 @@
     <UserSecretsId>102658e8-52e8-4593-8931-eaa21ece424b</UserSecretsId>
   </PropertyGroup>
 
-  <!-- Exclude tests folder from being compiled in the main project -->
+  <!-- Exclude tests folder, scripts and temp projects from being compiled in the main project -->
   <ItemGroup>
     <Compile Remove="tests\**\*.cs" />
+    <Compile Remove="scripts\**\*.cs" />
+    <Compile Remove="TempBcryptGen\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,7 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
 
 </Project>

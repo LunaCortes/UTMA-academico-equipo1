@@ -8,8 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace utma_academico_aspnetcore.Services
 {
     /// <summary>
-    /// Servicio para generar tokens JWT.
-    /// Comentarios añadidos explicando configuración y claims.
+    /// Servicio para generar tokens JWT con informaciÃ³n de usuario y rol.
     /// </summary>
     public class JwtService
     {
@@ -17,24 +16,18 @@ namespace utma_academico_aspnetcore.Services
 
         public JwtService(IConfiguration configuration)
         {
-            _configuration = configuration; // inyecta configuración para leer clave, issuer, audience
+            _configuration = configuration;
         }
 
         /// <summary>
-        /// Genera token JWT con claims básicos: sub (id), unique_name (username)
-        /// Pasos:
-        /// - Leer clave/issuer/audience desde configuración (appsettings).
-        /// - Crear SymmetricSecurityKey con la clave.
-        /// - Crear SigningCredentials con HmacSha256.
-        /// - Construir los claims mínimos y crear JwtSecurityToken.
-        /// - Devolver token codificado y fecha de expiración.
+        /// Genera token JWT con claims: idUsuario, email, rol
         /// </summary>
-        public (string token, DateTime expires) GenerateToken(int userId, string username)
+        public (string token, DateTime expires) GenerateToken(int userId, string email, string rol)
         {
-            // Leer configuración con valores por defecto (solo para desarrollo)
+            // Leer configuraciÃ³n con valores por defecto
             var key = _configuration["Jwt:Key"] ?? "VerySecret_SymmetricKey_ChangeThisInProduction_UTMA2025";
-            var issuer = _configuration["Jwt:Issuer"] ?? "utma";
-            var audience = _configuration["Jwt:Audience"] ?? "utma_users";
+            var issuer = _configuration["Jwt:Issuer"] ?? "UTMA";
+            var audience = _configuration["Jwt:Audience"] ?? "UTMA";
             var durationMinutes = int.TryParse(_configuration["Jwt:DurationMinutes"], out var m) ? m : 120;
 
             // Crear la clave de seguridad y credenciales para firmar el token
@@ -43,11 +36,14 @@ namespace utma_academico_aspnetcore.Services
 
             var expires = DateTime.UtcNow.AddMinutes(durationMinutes);
 
-            // Claims: sub = subject (id), Name = username, jti = token id
+            // Claims: sub (idUsuario), email, role, name (email)
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(ClaimTypes.Name, username),
+                new Claim(JwtRegisteredClaimNames.Email, email),
+                new Claim(ClaimTypes.Role, rol),
+                new Claim(ClaimTypes.Name, email),
+                new Claim("idUsuario", userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

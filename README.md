@@ -1,27 +1,24 @@
-# UTMA-Académico — ASP.NET Core Web API 🎓
+# Sistema de Gestión de Citas Médicas 🏥
 
-**Backend académico universitario – Equipo 1**  
-Proyecto basado en la plantilla oficial del profesor (2025).
+**API REST en ASP.NET Core 8** para la gestión integral de citas médicas en clínicas y hospitales.
 
-> **Estado actual:** ¡Listo para desarrollo! ✅  
-> Seguridad mejorada: secretos fuera del repositorio, autenticación JWT + ApiKey y usuario admin de prueba incluido.
+> **Estado:** ✅ Funcional y listo para desarrollo
 
 ---
 
-## Descripción del proyecto 📚
+## 📋 Descripción del Proyecto
 
-UTMA-Académico es una **API REST en ASP.NET Core 8** que permite gestionar información académica básica:
+Sistema completo de gestión de citas médicas que permite:
 
-- **Alumnos, materias, calificaciones y asistencias**.
-- **Autenticación con JWT** (token Bearer en los encabezados).
-- Acceso a **reportes** (por ejemplo, alumnos con bajo rendimiento).
-- Documentación interactiva con **Swagger**.
-
-Está pensada como base de práctica para alumnos que están empezando con .NET, C#, EF Core y JWT.
+- **Autenticación** con JWT (JSON Web Tokens)
+- **Gestión de pacientes, médicos y citas médicas**
+- **Control de horarios disponibles**
+- **Autorización basada en roles** (Administrador, Médico, Recepcionista, Paciente)
+- **Documentación interactiva** con Swagger
 
 ---
 
-## Equipo de desarrollo 👨‍💻👩‍💻
+## 👥 Equipo de Desarrollo
 
 | Nombre                            | GitHub            |
 |-----------------------------------|-------------------|
@@ -30,313 +27,364 @@ Está pensada como base de práctica para alumnos que están empezando con .NET,
 
 ---
 
-## Requisitos previos 🧩
+## 🧩 Requisitos Previos
 
-Antes de intentar ejecutar la API, asegúrate de tener instalado:
+Antes de ejecutar la API, asegúrate de tener instalado:
 
-- **SDK .NET 8**  
-  - Puedes verificar con:  
-    ```powershell
-    dotnet --version
-    ```
-- **Motor de base de datos**  
-  - MySQL o MariaDB (local o en contenedor).  
-  - Usuario con permisos para crear BD y ejecutar scripts (`db_sys_universities.sql`).
-- **Herramientas recomendadas**
-  - Git
-  - PowerShell (en Windows) o cualquier terminal
-  - Visual Studio 2022 / Visual Studio Code
-  - Postman (opcional, para probar la API)
+- **.NET 8 SDK** o superior
+  ```powershell
+  dotnet --version  # Debe mostrar 8.x.x o superior
+  ```
+- **MySQL 8.0+** o **MariaDB 10.3+** (local o en contenedor)
+- **Git** (para clonar el repositorio)
+- **IDE recomendado:** Visual Studio 2022, VS Code o Rider
 
 ---
 
-## Puesta en marcha rápida (TL;DR) ⚡
+## 🚀 Inicio Rápido
 
-1. Clonar el repositorio y cambiar a la rama `develop`.
-2. Configurar **user-secrets** (`ConnectionStrings:AcademicoDb`, `Jwt:Key`, `Authentication:TestApiKey`).
-3. Crear la base de datos ejecutando los scripts SQL en la carpeta `bd/`.
-4. Ejecutar:
-   ```powershell
-   dotnet run --project utma-academico-aspnetcore.csproj
-   ```
-5. Abrir Swagger en el navegador y probar los endpoints:
-   - `https://localhost:PUERTO/swagger`
-
-Más detalles en la siguiente sección.
-
----
-
-## Pasos para levantar la API en local 🛠️
-
-### 1. Clonar el repositorio del equipo
+### 1. Clonar el Repositorio
 
 ```powershell
-git clone https://github.com/LunaCortes/UTMA-academico-equipo1.git
+git clone <repository-url>
 cd UTMA-academico-equipo1
-git checkout develop
 ```
 
----
+### 2. Configurar User Secrets
 
-### 2. Configurar `user-secrets` (solo una vez por máquina)
-
-Desde la **raíz del proyecto**:
+Configura los secretos necesarios para la aplicación:
 
 ```powershell
-dotnet user-secrets init
-```
+# Inicializar user-secrets
+dotnet user-secrets init --project utma-academico-aspnetcore.csproj
 
-#### 2.1. Cadena de conexión MySQL 🔐
+# Configurar cadena de conexión MySQL
+dotnet user-secrets set "ConnectionStrings:AcademicoDb" "Server=localhost;Database=sistemaGestionCitasMedicas;User=root;Password=TU_PASSWORD" --project utma-academico-aspnetcore.csproj
 
-```powershell
-dotnet user-secrets set "ConnectionStrings:AcademicoDb" "Server=localhost;Database=db_sys_universities;User=root;Password=TU_CONTRASEÑA_AQUÍ"
-```
-
-#### 2.2. Clave JWT segura (32 bytes → Base64) 🔑
-
-```powershell
+# Generar y configurar clave JWT (32 bytes en Base64)
 $bytes = New-Object byte[] 32
 [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
 $jwtKey = [Convert]::ToBase64String($bytes)
-Write-Host "Tu clave JWT (guárdala): $jwtKey"
-dotnet user-secrets set "Jwt:Key" "$jwtKey"
+dotnet user-secrets set "Jwt:Key" "$jwtKey" --project utma-academico-aspnetcore.csproj
+
+# Configurar Issuer y Audience (opcional, tienen valores por defecto)
+dotnet user-secrets set "Jwt:Issuer" "UTMA" --project utma-academico-aspnetcore.csproj
+dotnet user-secrets set "Jwt:Audience" "UTMA" --project utma-academico-aspnetcore.csproj
 ```
 
-#### 2.3. ApiKey de desarrollo (para login de prueba) 🧪
+**Verificar configuración:**
+```powershell
+dotnet user-secrets list --project utma-academico-aspnetcore.csproj
+```
+
+### 3. Crear la Base de Datos
+
+Ejecuta el script SQL para crear la base de datos y las tablas:
 
 ```powershell
-dotnet user-secrets set "Authentication:TestApiKey" "utma_academico_dev"
+# Opción 1: Desde PowerShell
+Get-Content bd/sistemaGestionCitasMedicas.sql | mysql -u root -p
+
+# Opción 2: Desde MySQL CLI
+mysql -u root -p < bd/sistemaGestionCitasMedicas.sql
+
+# Opción 3: Desde MySQL Workbench o cliente gráfico
+# Abre y ejecuta el archivo: bd/sistemaGestionCitasMedicas.sql
 ```
 
-#### 2.4. Verificar que los secretos quedaron guardados
+**Nota:** Asegúrate de que la base de datos `sistemaGestionCitasMedicas` se cree correctamente.
+
+### 4. Actualizar Contraseñas con BCrypt (Opcional)
+
+Si la base de datos tiene usuarios con contraseñas en texto plano, actualízalas:
 
 ```powershell
-dotnet user-secrets list
+Get-Content bd/actualizar_passwords_bcrypt.sql | mysql -u root -p sistemaGestionCitasMedicas
 ```
 
-Debes ver algo similar a:
+### 5. Ejecutar la Aplicación
 
-- `ConnectionStrings:AcademicoDb = Server=localhost;Database=db_sys_universities;...`
-- `Jwt:Key = TuClaveSuperSeguraBase64Aqui==`
-- `Authentication:TestApiKey = utma_academico_dev`
+```powershell
+# Opción 1: Solo HTTP (recomendado para desarrollo)
+dotnet run --project utma-academico-aspnetcore.csproj --launch-profile http
+
+# Opción 2: HTTP y HTTPS
+dotnet run --project utma-academico-aspnetcore.csproj --launch-profile https
+```
+
+La aplicación iniciará y mostrará la URL en la consola, por ejemplo:
+```
+Now listening on: http://localhost:5234
+# O si usas HTTPS:
+Now listening on: https://localhost:7275
+Now listening on: http://localhost:5234
+```
+
+**⚠️ IMPORTANTE:** Usa la URL exacta que aparece en la consola (HTTP o HTTPS).
+
+### 6. Abrir Swagger
+
+Abre tu navegador en la URL mostrada en la consola:
+
+**Si usas HTTP:**
+```
+http://localhost:5234/swagger
+```
+
+**Si usas HTTPS:**
+```
+https://localhost:7275/swagger
+```
+
+> **Nota:** Si usas HTTPS por primera vez, es posible que necesites confiar en el certificado de desarrollo:
+> ```powershell
+> dotnet dev-certs https --trust
+> ```
+
+Deberías ver la interfaz de Swagger con todos los endpoints disponibles.
 
 ---
 
-### 3. Crear la base de datos MySQL 🗄️
+## 🔐 Autenticación
 
-En la carpeta `bd/` vienen los scripts necesarios.
+### Obtener Token JWT
 
-Desde la raíz del proyecto:
+1. En Swagger, busca el endpoint `POST /api/auth/login`
+2. Haz clic en **"Try it out"**
+3. Ingresa las credenciales:
+   ```json
+   {
+     "emailUsuario": "admin@clinica.com",
+     "passwordUsuario": "admin123"
+   }
+   ```
+4. Ejecuta y copia el `token` de la respuesta
 
-```powershell
-cd bd
-```
+### Autorizar en Swagger
 
-#### 3.1. Crear estructura de tablas
-
-```powershell
-mysql -u root -p < db_sys_universities.sql
-```
-
-> En PowerShell, si el operador `<` te da error, usa:
-> ```powershell
-> cmd /c "mysql -u root -p < db_sys_universities.sql"
-> ```
-
-#### 3.2. Insertar usuario admin de prueba
-
-```powershell
-mysql -u root -p < setup_admin_user.sql
-```
-
-> En PowerShell:
-> ```powershell
-> cmd /c "mysql -u root -p < setup_admin_user.sql"
-> ```
-
-Credenciales de desarrollo:
-
-- **Usuario**: `admin`  
-- **ApiKey**: `utma_academico_dev`  
-- **Contraseña**: `admin123` (ya viene hasheada con BCrypt en el script).
-
-#### 3.3. Cargar datos de ejemplo (alumnos + calificaciones) 🧪
-
-Para tener 20 alumnos y ~120 calificaciones listas para probar:
-
-```powershell
-mysql -u root -p db_sys_universities < seed_data.sql
-```
-
-> En PowerShell:
-> ```powershell
-> cmd /c "mysql -u root -p db_sys_universities < seed_data.sql"
-> ```
-
-O desde el cliente de MySQL interactivo:
-
-```sql
-USE db_sys_universities;
-SOURCE seed_data.sql;
-```
+1. Haz clic en el botón **"Authorize"** (arriba a la derecha, con candado 🔒)
+2. En el campo **"Value"**, pega el token con este formato:
+   ```
+   Bearer TU_TOKEN_AQUI
+   ```
+   **IMPORTANTE:** Debe incluir la palabra "Bearer" seguida de un espacio y luego el token
+3. Haz clic en **"Authorize"** y cierra el diálogo
+4. Ahora puedes probar los endpoints protegidos
 
 ---
 
-### 4. Ejecutar la API y abrir Swagger 🚀
+## 📚 Endpoints Principales
 
-Desde la raíz del proyecto:
+### Autenticación
+- `POST /api/auth/login` - Obtener token JWT
 
-```powershell
-dotnet run --project utma-academico-aspnetcore.csproj
-```
+### Catálogos
+- `GET /api/catalogos/roles` - Listar roles
+- `GET /api/catalogos/especialidades` - Listar especialidades
+- `GET /api/catalogos/estados-cita` - Listar estados de cita
 
-En la consola verás algo como:
+### Pacientes (CRUD Completo)
+- `GET /api/pacientes` - Listar pacientes
+- `GET /api/pacientes/{id}` - Obtener paciente
+- `POST /api/pacientes` - Crear paciente
+- `PUT /api/pacientes/{id}` - Actualizar paciente
+- `DELETE /api/pacientes/{id}` - Eliminar paciente
 
-```text
-Now listening on: https://localhost:XXXXX
-```
+### Médicos (CRUD Completo)
+- `GET /api/medicos` - Listar médicos
+- `GET /api/medicos/{id}` - Obtener médico
+- `POST /api/medicos` - Crear médico
+- `PUT /api/medicos/{id}` - Actualizar médico
+- `DELETE /api/medicos/{id}` - Desactivar médico
 
-Abre tu navegador en:
+### Citas Médicas (CRUD Completo)
+- `GET /api/citas` - Listar citas
+- `GET /api/citas/{id}` - Obtener cita
+- `POST /api/citas` - Crear cita
+- `PUT /api/citas/{id}` - Actualizar cita
+- `PUT /api/citas/{id}/estado` - Actualizar estado
+- `DELETE /api/citas/{id}` - Eliminar cita
 
-```text
-https://localhost:XXXXX/swagger
-```
+**Total: 29 endpoints implementados**
 
-(Reemplaza `XXXXX` por el puerto que aparece en la consola).  
-Deberías ver el listado de endpoints de la API.
+Para ver todos los endpoints, consulta la documentación en Swagger o el archivo `PRUEBAS_ENDPOINTS.http`.
 
 ---
 
-### 5. Probar autenticación (obtener token JWT) 🔒
+## 🧪 Probar los Endpoints
 
-En Swagger:
+### Opción 1: Swagger (Recomendado)
+1. Abre Swagger en el navegador
+2. Autoriza con tu token (ver sección de Autenticación)
+3. Prueba los endpoints directamente desde la interfaz
 
-1. Busca `POST /api/auth/login`.
-2. Haz clic en **Try it out**.
-3. Usa este body:
+### Opción 2: Archivo .http (VS Code)
+1. Instala la extensión "REST Client" en VS Code
+2. Abre el archivo `PRUEBAS_ENDPOINTS.http`
+3. Ajusta `{{baseUrl}}` con tu URL
+4. Ejecuta el login primero
+5. Copia el token y reemplaza `{{token}}`
+6. Ejecuta los demás endpoints
 
+### Opción 3: Postman
+1. Importa el archivo `PRUEBAS_ENDPOINTS.http` o crea una colección manualmente
+2. Configura variables de entorno (`baseUrl`, `token`)
+3. Ejecuta las pruebas
+
+---
+
+## 🔧 Configuración Adicional
+
+### Cambiar Puerto
+
+Edita `Properties/launchSettings.json`:
 ```json
 {
-  "usuario": "admin",
-  "apiKey": "utma_academico_dev"
+  "applicationUrl": "https://localhost:7000;http://localhost:5000"
 }
 ```
 
-4. Presiona **Execute**.
-5. Copia el valor de `token` de la respuesta.
+### Configuración de Base de Datos
 
----
-
-### 6. Probar endpoints protegidos 🧪
-
-1. En Swagger, haz clic en el botón **Authorize**.
-2. Escribe:
-
-```text
-Bearer TU_TOKEN_AQUI
+La cadena de conexión se configura en user-secrets. Formato:
+```
+Server=localhost;Database=sistemaGestionCitasMedicas;User=root;Password=TU_PASSWORD
 ```
 
-3. Prueba cualquier endpoint que tenga candado (🔒):
-   - **Sin token** → debe responder `401 Unauthorized`.
-   - **Con token** → debe devolver datos (`200 OK`).
+### Duración del Token JWT
 
----
-
-### 7. (Opcional) Configurar Postman 🧪📮
-
-1. Crea un entorno llamado `UTMA-Dev`.
-2. Agrega una variable `token` (valor inicial vacío).
-3. Crea un request:
-   - `POST https://localhost:XXXXX/api/auth/login`
-   - Body: el mismo JSON de la sección anterior.
-4. En la pestaña **Tests** del request, pega:
-
-```javascript
-if (pm.response.code === 200) {
-    const json = pm.response.json();
-    pm.environment.set("token", json.token);
-    console.log("Token guardado:", json.token);
-}
-```
-
-5. En todos los demás requests protegidos, agrega el header:
-
-```text
-Authorization: Bearer {{token}}
-```
-
-Postman actualizará el token automáticamente cada vez que hagas login.
-
----
-
-## Flujo funcional básico del sistema 🧭
-
-- El cliente (Swagger, Postman, app front) **hace login** con `usuario` + `apiKey`.
-- La API valida la ApiKey y el usuario en BD y **genera un JWT**.
-- Las siguientes peticiones protegidas se hacen con el header  
-  `Authorization: Bearer <token>`.
-- Los controladores usan **EF Core** para consultar MySQL y devolver JSON.
-
-Para más detalles técnicos, revisa el manual: `UTMA-Academico-Manual.md`.
-
----
-
-## Cómo crear una nueva funcionalidad (Git Flow) 🌱
-
-Desde la raíz del proyecto:
-
+Por defecto, los tokens expiran en 120 minutos. Para cambiar:
 ```powershell
-# 1. Asegúrate de estar en develop y actualizado
-git checkout develop
-git pull origin develop
-
-# 2. Crea tu rama de feature
-git checkout -b feature/nombre-de-tu-feature
-
-# 3. Trabaja, commitea y pushea
-git add .
-git commit -m "feat: descripción clara de lo que hiciste"
-git push -u origin feature/nombre-de-tu-feature
+dotnet user-secrets set "Jwt:DurationMinutes" "240" --project utma-academico-aspnetcore.csproj
 ```
 
-Luego abre el Pull Request en GitHub:
+---
 
-- **base**: `develop`  
-- **compare**: tu rama `feature/...`
+## 🐛 Solución de Problemas
+
+### Error: "Access denied for user 'root'@'localhost'"
+**Solución:** Verifica que la contraseña en user-secrets sea correcta:
+```powershell
+dotnet user-secrets list --project utma-academico-aspnetcore.csproj
+```
+
+### Error: "Invalid salt version" al hacer login
+**Solución:** Las contraseñas deben estar hasheadas con BCrypt. Ejecuta:
+```powershell
+Get-Content bd/actualizar_passwords_bcrypt.sql | mysql -u root -p sistemaGestionCitasMedicas
+```
+
+### Error 401 Unauthorized después del login
+**Solución:** 
+1. Verifica que el token se esté enviando con el formato: `Bearer TOKEN`
+2. Asegúrate de que el token no haya expirado (genera uno nuevo)
+3. Reinicia el servidor después de cambios en configuración
+
+### La base de datos no existe
+**Solución:** Ejecuta el script SQL:
+```powershell
+Get-Content bd/sistemaGestionCitasMedicas.sql | mysql -u root -p
+```
+
+### El puerto cambia cada vez
+**Solución:** Es normal en .NET. Copia siempre el puerto que aparece en la consola al abrir Swagger.
+
+### Error SSL: "WRONG_VERSION_NUMBER"
+**Solución:** Estás mezclando HTTP y HTTPS. Verifica:
+1. Si el servidor muestra `http://localhost:XXXX` → usa **HTTP** en tu cliente
+2. Si el servidor muestra `https://localhost:XXXX` → usa **HTTPS** en tu cliente
+3. Para desarrollo, usa el perfil HTTP: `--launch-profile http`
+4. Para más detalles, consulta `Problemas_Soluciones/SOLUCION_ERROR_SSL.md`
+
+Para más detalles sobre problemas y soluciones, consulta la carpeta `Problemas_Soluciones/`.
 
 ---
 
-## Checklist antes de abrir un PR ✅
+## 📖 Documentación Adicional
 
-- `dotnet build` sin errores.
-- `dotnet run` + Swagger funciona.
-- Configuré mis **user-secrets**.
-- No subí ningún secreto ni `appsettings.json` con datos reales.
-- Probé login → el token funciona.
-- Endpoints protegidos devuelven `401` sin token.
-- La rama está basada en `develop` actualizado.
-- Los mensajes de commit son claros y en español.
-- Asigné al menos un revisor en el PR.
+- **Documentación Técnica Completa:** `DOCUMENTACION_TECNICA.md`
+- **Reporte de Pruebas:** `REPORTE_PRUEBAS_ENDPOINTS.md`
+- **Pruebas de Endpoints:** `PRUEBAS_ENDPOINTS.http`
+- **Problemas y Soluciones:** `Problemas_Soluciones/`
 
 ---
 
-## Troubleshooting rápido 🧯
+## 🏗️ Arquitectura del Proyecto
 
-- **No inicia (falta connection string)**  
-  Ejecuta de nuevo `dotnet user-secrets list` y verifica `ConnectionStrings:AcademicoDb`.
+El proyecto sigue una **arquitectura en capas**:
 
-- **401 en todos lados**  
-  Verifica que la ApiKey sea exactamente `utma_academico_dev` y que estés enviando el header `Authorization: Bearer <token>`.
+```
+Controllers (API Layer)
+    ↓
+Services (Business Logic)
+    ↓
+Data Access (EF Core)
+    ↓
+Database (MySQL)
+```
 
-- **La base de datos no existe**  
-  Asegúrate de haber ejecutado los scripts SQL en orden: primero `db_sys_universities.sql`, luego `setup_admin_user.sql`.
+### Estructura de Carpetas
 
-- **El puerto cambia cada vez**  
-  Es normal en .NET. Copia siempre el puerto que aparece en la consola al abrir Swagger o Postman.
+- `Controllers/` - Endpoints HTTP
+- `Services/` - Lógica de negocio
+- `Data/` - DbContext y acceso a datos
+- `Models/` - Entidades EF Core
+- `DTOs/` - Data Transfer Objects
+- `Middleware/` - Manejo de errores
+- `Exceptions/` - Excepciones personalizadas
+- `bd/` - Scripts SQL
 
-- **Token inválido**  
-  Regenera la `Jwt:Key` (32 bytes) en `user-secrets` y reinicia la API.
+---
 
-Si todo esto falla, revisa también el script `scripts/verificar_proyecto.ps1` para una verificación automática básica del proyecto. 🎯
+## 🔒 Seguridad
 
+- **Autenticación:** JWT (JSON Web Tokens)
+- **Hashing de contraseñas:** BCrypt con salt automático
+- **Autorización:** Basada en roles (Administrador, Médico, Recepcionista, Paciente)
+- **Validaciones:** Campos requeridos, unicidad, reglas de negocio
 
+---
+
+## 📊 Tecnologías Utilizadas
+
+- **.NET 8** - Framework de desarrollo
+- **ASP.NET Core 8** - Framework web
+- **Entity Framework Core 9** - ORM
+- **MySQL/MariaDB** - Base de datos
+- **JWT** - Autenticación
+- **BCrypt** - Hashing de contraseñas
+- **Swagger/OpenAPI** - Documentación
+
+---
+
+## ✅ Checklist de Verificación
+
+Antes de reportar problemas, verifica:
+
+- [ ] .NET 8 SDK instalado y funcionando
+- [ ] MySQL/MariaDB instalado y corriendo
+- [ ] Base de datos `sistemaGestionCitasMedicas` creada
+- [ ] User-secrets configurados correctamente
+- [ ] Contraseñas actualizadas con BCrypt (si aplica)
+- [ ] Servidor iniciado sin errores
+- [ ] Swagger accesible en el navegador
+- [ ] Login funciona y genera token
+- [ ] Token se usa correctamente en endpoints protegidos
+
+---
+
+## 📝 Licencia
+
+Ver archivo `LICENSE` para más detalles.
+
+---
+
+## 👨‍💻 Contribuir
+
+1. Crea una rama desde `develop`
+2. Realiza tus cambios
+3. Asegúrate de que el proyecto compile
+4. Prueba los endpoints
+5. Abre un Pull Request
+
+---
